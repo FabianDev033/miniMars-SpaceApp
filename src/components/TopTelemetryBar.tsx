@@ -14,6 +14,7 @@ interface TopTelemetryBarProps {
   onToggleDetour: () => void;
   simulateSolarAlert: boolean;
   onToggleSolarAlert: () => void;
+  onOpenScientificAudit: () => void;
   simulation: MissionSimulationResult;
   parametros: MissionSimulationParameters;
 }
@@ -25,6 +26,7 @@ export function TopTelemetryBar({
   onToggleDetour,
   simulateSolarAlert,
   onToggleSolarAlert,
+  onOpenScientificAudit,
   simulation,
   parametros,
 }: TopTelemetryBarProps) {
@@ -33,6 +35,26 @@ export function TopTelemetryBar({
 
   return (
     <header className="flex flex-col gap-2 border-b border-slate-800 pb-2.5">
+      {/* FILA SUPERIOR DE IDENTIDAD Y BOTÓN DE AUDITORÍA CIENTÍFICA Y FUENTES NASA */}
+      <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-slate-800 bg-slate-900/90 px-3 py-1.5 font-mono">
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded border border-cyan-500/50 bg-cyan-950 px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-cyan-300">
+            TABLET DE MUÑECA EVA 16:9 // MOUNT SHARP (SECTOR BOXWORK)
+          </span>
+          <span className="text-xs font-bold text-slate-300">
+            Curiosity MSL • Cráter Gale, Marte
+          </span>
+        </div>
+
+        <button
+          type="button"
+          onClick={onOpenScientificAudit}
+          className="min-h-[38px] rounded-xl border-2 border-cyan-400 bg-cyan-500/20 px-3.5 py-1 text-xs font-black uppercase tracking-wide text-cyan-200 shadow-[0_0_15px_rgba(34,211,238,0.25)] transition-all hover:bg-cyan-500/30 active:scale-95"
+        >
+          [ℹ️ AUDITORÍA CIENTÍFICA Y FUENTES NASA]
+        </button>
+      </div>
+
       {/* FILA 1: SELECTOR DE ESCENARIO + CONTROLES DE DESVÍO Y ALERTA + BANNER DE ESTADO */}
       <div className="grid grid-cols-1 gap-2 lg:grid-cols-12">
         {/* Botones Grandes para Guantes: Modo Astronauta Solo vs. Astronauta + Rover */}
@@ -174,7 +196,6 @@ export function TopTelemetryBar({
             </span>
           </div>
 
-          {/* Barra con Línea Límite de Reserva del 25% */}
           <div className="relative mt-1.5 h-3 w-full overflow-hidden rounded-full bg-slate-800">
             <div
               className={`h-full transition-all duration-300 ${
@@ -184,7 +205,6 @@ export function TopTelemetryBar({
                 width: `${Math.min(100, oxigeno.oxigenoRestantePorcentaje)}%`,
               }}
             />
-            {/* Línea vertical de Reserva del 25% */}
             <div
               className="absolute bottom-0 top-0 z-10 w-0.5 bg-rose-400 shadow-[0_0_6px_#f43f5e]"
               style={{ left: `${oxigeno.reservaMinimaPorcentaje}%` }}
@@ -229,7 +249,6 @@ export function TopTelemetryBar({
             </span>
           </div>
 
-          {/* Barra segmentada Ida + Ciencia + Regreso */}
           <div className="mt-1.5 flex h-3 w-full overflow-hidden rounded-full bg-slate-800">
             <div
               className="h-full bg-sky-400 transition-all"
@@ -304,7 +323,7 @@ export function TopTelemetryBar({
             <span
               className={`rounded px-1.5 py-0.5 text-[10px] font-bold ${
                 mode === "conRover"
-                  ? "bg-amber-500/20 text-amber-200 border border-amber-500/40"
+                  ? "border-amber-500/40 bg-amber-500/20 text-amber-200 border"
                   : "bg-slate-800 text-slate-400"
               }`}
             >
@@ -344,7 +363,10 @@ export function TopTelemetryBar({
             />
           </div>
 
-          <p className="mt-1 truncate text-[10px] text-amber-200/90" title="Transporte instrumental y pre-escaneo óptico: reduce tiempo de parada científica">
+          <p
+            className="mt-1 truncate text-[10px] text-amber-200/90"
+            title="Transporte instrumental y pre-escaneo óptico: reduce tiempo de parada científica"
+          >
             Función: Transporte instrumental y pre-escaneo óptico: reduce tiempo
             de parada científica
           </p>

@@ -7,6 +7,7 @@ import {
   EvaSequencePlayer,
 } from "~/components/EvaSequencePlayer";
 import { NodeAuditDrawer } from "~/components/NodeAuditDrawer";
+import { ScientificAuditModal } from "~/components/ScientificAuditModal";
 import { TacticalMapCanvas } from "~/components/TacticalMapCanvas";
 import { TopTelemetryBar } from "~/components/TopTelemetryBar";
 import { api } from "~/trpc/react";
@@ -20,6 +21,8 @@ export function WristTabletHUD() {
   const [nodoSeleccionadoId, setNodoSeleccionadoId] = useState<string>(
     "nodo-1-inicio-seguro"
   );
+  const [modalAuditoriaAbierto, setModalAuditoriaAbierto] =
+    useState<boolean>(false);
 
   const missionDataQuery = api.mission.getMissionData.useQuery();
   const simQuery = api.mission.simulateMission.useQuery({
@@ -100,6 +103,7 @@ export function WristTabletHUD() {
           onToggleDetour={handleToggleDetour}
           simulateSolarAlert={simulateSolarAlert}
           onToggleSolarAlert={() => setSimulateSolarAlert((prev) => !prev)}
+          onOpenScientificAudit={() => setModalAuditoriaAbierto(true)}
           simulation={sim}
           parametros={data.parametros}
         />
@@ -145,6 +149,14 @@ export function WristTabletHUD() {
         <DecisionEnginePanel
           mode={mode}
           evaluacionDesvio={sim.evaluacionDesvio}
+        />
+
+        {/* 5. MODAL DE DOCUMENTACIÓN Y TRANSPARENCIA CIENTÍFICA INTEGRADA (FASE 4) */}
+        <ScientificAuditModal
+          abierto={modalAuditoriaAbierto}
+          onCerrar={() => setModalAuditoriaAbierto(false)}
+          nodos={data.nodos}
+          parametros={data.parametros}
         />
       </div>
     </div>
