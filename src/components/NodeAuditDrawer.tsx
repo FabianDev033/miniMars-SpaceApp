@@ -150,11 +150,10 @@ export function NodeAuditDrawer({
             Nodo N{nodo.orden} · {nodo.imagenPov.codigoPia}
           </span>
           <span
-            className={`rounded-lg bg-[#4f2b1b] px-3 py-2 text-[10px] font-medium ${
-              nodo.esRutaHistoricaCuriosity
+            className={`rounded-lg bg-[#4f2b1b] px-3 py-2 text-[10px] font-medium ${nodo.esRutaHistoricaCuriosity
                 ? "text-emerald-200"
                 : "text-amber-200"
-            }`}
+              }`}
           >
             {nodo.esRutaHistoricaCuriosity
               ? "RUTA HISTÓRICA CURIOSITY"
@@ -226,11 +225,10 @@ export function NodeAuditDrawer({
                     {fotoActiva.camaraSol}
                   </span>
                   <span
-                    className={`rounded border px-2 py-0.5 font-black backdrop-blur-sm ${
-                      esPeligroAlto
+                    className={`rounded border px-2 py-0.5 font-black backdrop-blur-sm ${esPeligroAlto
                         ? "border-rose-400 bg-rose-950/85 text-rose-200"
                         : "border-emerald-400/70 bg-emerald-950/80 text-emerald-300"
-                    }`}
+                      }`}
                   >
                     PENDIENTE: {nodo.riesgoTramo.pendienteGrados}° (
                     {nodo.riesgoTramo.nivel.toUpperCase()})
@@ -275,11 +273,10 @@ export function NodeAuditDrawer({
                   setIndiceFotoGaleria(idx);
                   setImagenRealDisponible(true);
                 }}
-                className={`group relative h-11 overflow-hidden rounded-lg border-2 transition-all ${
-                  indiceFotoGaleria === idx
+                className={`group relative h-11 overflow-hidden rounded-lg border-2 transition-all ${indiceFotoGaleria === idx
                     ? "border-cyan-400 ring-2 ring-cyan-400/40"
                     : "border-[#6c3d27] opacity-75 hover:opacity-100"
-                }`}
+                  }`}
               >
                 <img
                   src={item.src}
@@ -302,11 +299,10 @@ export function NodeAuditDrawer({
             type="button"
             onClick={() => onSelectNodo(n.id)}
             aria-pressed={n.id === nodo.id}
-            className={`min-h-10 rounded-xl border px-2 py-2 text-xs transition-colors ${
-              n.id === nodo.id
+            className={`min-h-10 rounded-xl border px-2 py-2 text-xs transition-colors ${n.id === nodo.id
                 ? "border-cyan-400 bg-cyan-400 text-slate-950"
                 : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-600"
-            }`}
+              }`}
           >
             N{n.orden}
           </button>
@@ -341,27 +337,26 @@ export function NodeAuditDrawer({
           Ver telemetría y trazabilidad del nodo ({todosLosRegistros.length})
         </summary>
         <div className="mt-3 grid grid-cols-2 gap-1 font-mono text-[10px] xl:grid-cols-4">
-        {(
-          [
-            { id: "TODAS", label: "TODAS (3 CAPAS)" },
-            { id: "movilidadTerreno", label: "4.1 TERRENO" },
-            { id: "seguridadSupervivencia", label: "4.2 SEGURIDAD" },
-            { id: "interesCientifico", label: "4.3 CIENCIA" },
-          ] as const
-        ).map((tab) => (
-          <button
-            key={tab.id}
-            type="button"
-            onClick={() => setFiltroCapa(tab.id)}
-            className={`rounded-lg border py-1.5 font-extrabold transition-all ${
-              filtroCapa === tab.id
-                ? "border-cyan-400 bg-cyan-950/80 text-white"
-                : "border-slate-800 bg-slate-950/60 text-slate-400 hover:border-slate-600"
-            }`}
-          >
-            {tab.label}
-          </button>
-        ))}
+          {(
+            [
+              { id: "TODAS", label: "TODAS (3 CAPAS)" },
+              { id: "movilidadTerreno", label: "4.1 TERRENO" },
+              { id: "seguridadSupervivencia", label: "4.2 SEGURIDAD" },
+              { id: "interesCientifico", label: "4.3 CIENCIA" },
+            ] as const
+          ).map((tab) => (
+            <button
+              key={tab.id}
+              type="button"
+              onClick={() => setFiltroCapa(tab.id)}
+              className={`rounded-lg border py-1.5 font-extrabold transition-all ${filtroCapa === tab.id
+                  ? "border-cyan-400 bg-cyan-950/80 text-white"
+                  : "border-slate-800 bg-slate-950/60 text-slate-400 hover:border-slate-600"
+                }`}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
 
         <div className="mt-3 max-h-72 space-y-2 overflow-y-auto pr-1">
@@ -424,11 +419,10 @@ export function NodeAuditDrawer({
                   key={item.src}
                   type="button"
                   onClick={() => setIndiceFotoGaleria(idx)}
-                  className={`flex items-center gap-2 rounded-xl border p-1.5 text-left text-xs ${
-                    indiceFotoGaleria === idx
+                  className={`flex items-center gap-2 rounded-xl border p-1.5 text-left text-xs ${indiceFotoGaleria === idx
                       ? "border-cyan-400 bg-cyan-950/60 text-white"
                       : "border-slate-800 bg-slate-900 text-slate-400"
-                  }`}
+                    }`}
                 >
                   <img
                     src={item.src}
