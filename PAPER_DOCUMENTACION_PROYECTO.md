@@ -1,25 +1,31 @@
-# EVA Wrist-Pad: Sistema Táctico de Soporte a Decisiones y Supervivencia Interplanetaria en el Sector Boxwork de Mount Sharp (Cráter Gale, Marte)
+# MiniMars: Sistema Táctico de Soporte a Decisiones y Supervivencia Interplanetaria en el Sector Boxwork de Mount Sharp (Cráter Gale, Marte)
 
 **Categoría / Desafío:** NASA Space Apps Challenge — *Guía de Supervivencia Interplanetaria (Interplanetary Survival Guide)*  
+**Integrantes del Equipo:** Jorge Geronimo Agüero López, Marcos Gabriel Coloma Muños y Fabian Barzola  
 **Escenario Geográfico de Estudio:** Aeolis Mons (*Mount Sharp*), Sector *Boxwork*, Cráter Gale, Marte ($\text{Lat. } -4.6805^\circ\text{ a } -4.6854^\circ\text{ N}, \text{Lon. } 137.3612^\circ\text{ a } 137.3668^\circ\text{ E}$)  
 **Arquitectura Tecnológica:** Stack T3 (`Next.js 15`, `TypeScript 5.7` Estricto, `tRPC v11`, `Tailwind CSS`, `Leaflet OGC WMTS`)  
 **Naturaleza Metodológica:** Prototipo determinista de planificación y auditoría de Actividades Extravehiculares (EVA) basado en telemetría histórica de la misión *Mars Science Laboratory* (MSL *Curiosity*) y modelos explícitos de soporte vital.
 
 ---
 
-## 1. Nombre del Proyecto
+## 1. Nombre del Proyecto e Integrantes
 
-**Nombre Oficial:**  
-> **EVA Wrist-Pad: Mount Sharp Boxwork Sector — Interplanetary Survival & Decision Support System**  
-*(Nombre corto de repositorio / prototipo: **miniMars-SpaceApp / EVA Wrist-Pad**)*
+**Nombre Oficial del Proyecto:**  
+> **MiniMars** *(Mount Sharp Boxwork Sector — Interplanetary Survival & Decision Support System)*  
+*(Repositorio: `miniMars-SpaceApp`)*
+
+**Integrantes del Equipo:**
+- **Jorge Geronimo Agüero López**
+- **Marcos Gabriel Coloma Muños**
+- **Fabian Barzola**
 
 ---
 
 ## 2. Resumen General del Proyecto (*Abstract*)
 
-La transición desde la exploración robótica hacia futuras misiones humanas en la superficie de Marte exige sistemas de soporte a la toma de decisiones en tiempo real que integren simultáneamente topografía orbital, telemetría ambiental in-situ, valor científico geológico y restricciones críticas de soporte vital portátil (*Portable Life Support System*, PLSS). **EVA Wrist-Pad** es una aplicación web interactiva que simula la interfaz táctica de una **tablet de muñeca para astronautas** operando en el sector de crestas minerales poligonales (*Boxwork*) de **Mount Sharp (Aeolis Mons)**, dentro del **Cráter Gale**.
+La transición desde la exploración robótica hacia futuras misiones humanas en la superficie de Marte exige sistemas de soporte a la toma de decisiones en tiempo real que integren simultáneamente topografía orbital, telemetría ambiental in-situ, valor científico geológico y restricciones críticas de soporte vital portátil (*Portable Life Support System*, PLSS). **MiniMars** es una aplicación web interactiva que simula la interfaz táctica de una **tablet de muñeca para astronautas** operando en el sector de crestas minerales poligonales (*Boxwork*) de **Mount Sharp (Aeolis Mons)**, dentro del **Cráter Gale**.
 
-A diferencia de los visualizadores cartográficos pasivos o las simulaciones gamificadas que extrapolan datos inexistentes sin rigor documental, **EVA Wrist-Pad** establece un marco de **trazabilidad científica estricta**. El sistema fusiona la pirámide cartográfica orbital real de **NASA Mars Trek OGC WMTS** (mosaicos Viking MDIM 2.1, MRO CTX de $5\text{ m/px}$, MRO HiRISE de $0.25\text{ m/px}$, altimetría láser MOLA e inercia térmica THEMIS IR) con observaciones históricas verificables del rover **MSL Curiosity** (instrumentos RAD, REMS, ChemCam, MAHLI, APXS y cámaras Mastcam entre los soles 4189 y 4844). Sobre esta base empírica, un motor determinista programado en **tRPC y TypeScript** evalúa dos arquitecturas operativas —**Astronauta Solo** frente a **Astronauta acompañado por un Rover de Apoyo**— aplicando un modelo matemático explícito de consumo metabólico de oxígeno ($0.076\text{ kg O}_2/\text{h}$, según referencia *NASA BVAD*) y una **Regla de Decisión de 4 Pasos** donde la seguridad biomecánica y la reserva mínima de retorno ($\ge 25\%\text{ de O}_2$) operan como un filtro previo innegociable frente a la recompensa científica.
+A diferencia de los visualizadores cartográficos pasivos o las simulaciones gamificadas que extrapolan datos inexistentes sin rigor documental, **MiniMars** establece un marco de **trazabilidad científica estricta**. El sistema fusiona la pirámide cartográfica orbital real de **NASA Mars Trek OGC WMTS** (mosaicos Viking MDIM 2.1, MRO CTX de $5\text{ m/px}$, MRO HiRISE de $0.25\text{ m/px}$, altimetría láser MOLA e inercia térmica THEMIS IR) con observaciones históricas verificables del rover **MSL Curiosity** (instrumentos RAD, REMS, ChemCam, MAHLI, APXS y cámaras Mastcam entre los soles 4189 y 4844). Sobre esta base empírica, un motor determinista programado en **tRPC y TypeScript** evalúa dos arquitecturas operativas —**Astronauta Solo** frente a **Astronauta acompañado por un Rover de Apoyo**— aplicando un modelo matemático explícito de consumo metabólico de oxígeno ($0.076\text{ kg O}_2/\text{h}$, según referencia *NASA BVAD*) y una **Regla de Decisión de 4 Pasos** donde la seguridad biomecánica y la reserva mínima de retorno ($\ge 25\%\text{ de O}_2$) operan como un filtro previo innegociable frente a la recompensa científica.
 
 ---
 
@@ -62,7 +68,7 @@ A través de [NodeAuditDrawer.tsx](file:///c:/Users/angel/OneDrive/Documentos/Gi
 
 ## 4. ¿Cómo Responde al Desafío? (*Alignment with the NASA Space Apps Challenge*)
 
-El desafío **Guía de Supervivencia Interplanetaria** plantea la necesidad de diseñar una herramienta que permita a futuros exploradores humanos comprender el entorno marciano, ponderar las condiciones ambientales junto con el terreno y los objetivos científicos, y tomar decisiones fundamentadas para completar su misión y regresar con vida. **EVA Wrist-Pad** responde de manera directa e integral a cada requerimiento del desafío mediante tres mecanismos clave:
+El desafío **Guía de Supervivencia Interplanetaria** plantea la necesidad de diseñar una herramienta que permita a futuros exploradores humanos comprender el entorno marciano, ponderar las condiciones ambientales junto con el terreno y los objetivos científicos, y tomar decisiones fundamentadas para completar su misión y regresar con vida. **MiniMars** responde de manera directa e integral a cada requerimiento del desafío mediante tres mecanismos clave:
 
 ### 4.1. Integración Operativa de las Tres Capas Críticas de Supervivencia
 En lugar de presentar datos aislados, la aplicación articula en una sola vista táctica las tres dimensiones exigidas para la toma de decisiones EVA:
@@ -90,18 +96,18 @@ El proyecto resuelve el dilema central de toda exploración planetaria —**¿de
 
 ## 5. ¿Por Qué es Importante? (*Scientific, Operational & Educational Impact*)
 
-El desarrollo de **EVA Wrist-Pad** trasciende el alcance de un demostrador conceptual y aporta valor sustantivo en tres dimensiones fundamentales para el futuro de la exploración espacial:
+El desarrollo de **MiniMars** trasciende el alcance de un demostrador conceptual y aporta valor sustantivo en tres dimensiones fundamentales para el futuro de la exploración espacial:
 
 ### 5.1. Cambio de Paradigma: De la Exploración Robótica a la Sinergia Humano-Rover en Marte
 Durante más de una década, el rover *Curiosity* ha explorado el Cráter Gale a velocidades de pocos metros por hora. Cuando los primeros astronautas desciendan en Marte, no operarán aislados de los sistemas robóticos ni tendrán suministros ilimitados de soporte vital: cada minuto fuera del hábitat tendrá un costo metabólico inexorable ($\sim 0.076\text{ kg O}_2/\text{h}$) y una exposición acumulativa a radiación ionizante. Nuestro proyecto demuestra matemáticamente que **el rol de un rover acompañante no tiene por qué ser transportar físicamente al astronauta para salvarle la vida**: basta con que el rover actúe como **multiplicador de eficiencia científica** (pre-escaneando afloramientos y portando muestras) para reducir el tiempo estacionario en cada parada y mantener el consumo de oxígeno dentro del margen seguro de retorno ($\ge 25\%$).
 
 ### 5.2. Ética de Datos y Rigor Epistemológico contra la "Alucinación" Cartográfica
-Un problema recurrente en las herramientas de divulgación y simulación espacial es presentar interpolaciones ficticias como si fueran mediciones continuas de la NASA, borrando la frontera entre la realidad instrumental y el diseño del software. **EVA Wrist-Pad** introduce un estándar de **honestidad científica por diseño**:
+Un problema recurrente en las herramientas de divulgación y simulación espacial es presentar interpolaciones ficticias como si fueran mediciones continuas de la NASA, borrando la frontera entre la realidad instrumental y el diseño del software. **MiniMars** introduce un estándar de **honestidad científica por diseño**:
 - Enseña al usuario que los datos planetarios son **discretos, asincrónicos y dependientes del estado de los instrumentos** (como la pérdida parcial de los sensores de viento de REMS en ciertos soles o la imposibilidad de medir contacto en taludes de $24.5^\circ$).
 - Garantiza que ninguna métrica científica se utilice como excusa para vulnerar un filtro de seguridad humana (*Safety-First Architecture*).
 
 ### 5.3. Democratización de los Archivos Planetarios de la NASA (PDS y Mars Trek)
-Los repositorios científicos como el *Planetary Data System* (PDS Geosciences y PDS Atmospheres) o los documentos técnicos de soporte vital (*NASA BVAD*) suelen resultar inaccesibles para estudiantes, comunicadores y diseñadores de misiones debido a su complejidad técnica y fragmentación. **EVA Wrist-Pad** transforma esos catálogos de nivel de investigación en una experiencia inmersiva en primera persona (POV), permitiendo a cualquier persona ponerse en la piel de un astronauta en Mount Sharp, comprender por qué las formaciones *Boxwork* son clave para descifrar la historia del agua subterránea en Marte, y experimentar de primera mano la tensión real entre el descubrimiento científico y la supervivencia humana.
+Los repositorios científicos como el *Planetary Data System* (PDS Geosciences y PDS Atmospheres) o los documentos técnicos de soporte vital (*NASA BVAD*) suelen resultar inaccesibles para estudiantes, comunicadores y diseñadores de misiones debido a su complejidad técnica y fragmentación. **MiniMars** transforma esos catálogos de nivel de investigación en una experiencia inmersiva en primera persona (POV), permitiendo a cualquier persona ponerse en la piel de un astronauta en Mount Sharp, comprender por qué las formaciones *Boxwork* son clave para descifrar la historia del agua subterránea en Marte, y experimentar de primera mano la tensión real entre el descubrimiento científico y la supervivencia humana.
 
 ---
 

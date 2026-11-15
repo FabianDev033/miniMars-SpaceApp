@@ -1,25 +1,31 @@
-# EVA Wrist-Pad: Tactical Decision-Support and Interplanetary Survival System in the Mount Sharp Boxwork Sector (Gale Crater, Mars)
+# MiniMars: Tactical Decision-Support and Interplanetary Survival System in the Mount Sharp Boxwork Sector (Gale Crater, Mars)
 
 **Challenge Category:** NASA Space Apps Challenge — *Interplanetary Survival Guide*  
+**Team Members:** Jorge Geronimo Agüero López, Marcos Gabriel Coloma Muños, and Fabian Barzola  
 **Geographic Study Area:** Aeolis Mons (*Mount Sharp*), *Boxwork* Ridge Sector, Gale Crater, Mars ($\text{Lat. } -4.6805^\circ\text{ to } -4.6854^\circ\text{ N}, \text{Lon. } 137.3612^\circ\text{ to } 137.3668^\circ\text{ E}$)  
 **System Architecture:** T3 Stack (`Next.js 15`, Strict `TypeScript 5.7`, `tRPC v11`, `Tailwind CSS`, `Leaflet OGC WMTS`)  
 **Methodological Scope:** Deterministic Extravehicular Activity (EVA) planning and scientific data-traceability simulator grounded in historical *Mars Science Laboratory* (MSL *Curiosity*) telemetry and explicit Portable Life Support System (PLSS) baseline models.
 
 ---
 
-## 1. Project Name
+## 1. Project Name & Team Members
 
-**Official Title:**  
-> **EVA Wrist-Pad: Mount Sharp Boxwork Sector — Interplanetary Survival & Decision Support System**  
-*(Short Repository / Prototype Identifier: **miniMars-SpaceApp / EVA Wrist-Pad**)*
+**Official Project Name:**  
+> **MiniMars** *(Mount Sharp Boxwork Sector — Interplanetary Survival & Decision Support System)*  
+*(Repository Identifier: `miniMars-SpaceApp`)*
+
+**Team Members:**
+- **Jorge Geronimo Agüero López**
+- **Marcos Gabriel Coloma Muños**
+- **Fabian Barzola**
 
 ---
 
 ## 2. Executive Summary (*Abstract*)
 
-Transitioning from robotic surface reconnaissance to future crewed expeditions on Mars requires real-time operational decision-support architectures capable of simultaneously synthesizing orbital topography, in-situ environmental telemetry, geological science value, and life-critical Portable Life Support System (PLSS) constraints. **EVA Wrist-Pad** is an interactive web application that emulates a **tactical astronaut wrist-mounted tablet** operating across the polygonal mineral ridge (*Boxwork*) formations of **Mount Sharp (Aeolis Mons)** within **Gale Crater**.
+Transitioning from robotic surface reconnaissance to future crewed expeditions on Mars requires real-time operational decision-support architectures capable of simultaneously synthesizing orbital topography, in-situ environmental telemetry, geological science value, and life-critical Portable Life Support System (PLSS) constraints. **MiniMars** is an interactive web application that emulates a **tactical astronaut wrist-mounted tablet** operating across the polygonal mineral ridge (*Boxwork*) formations of **Mount Sharp (Aeolis Mons)** within **Gale Crater**.
 
-Unlike passive cartographic viewers or gamified simulations that silently interpolate missing planetary measurements, **EVA Wrist-Pad** enforces a **strict epistemological and scientific data-honesty framework**. The platform fuses the official multi-resolution orbital imagery pyramid from **NASA Mars Trek OGC WMTS** (Viking MDIM 2.1, MRO CTX at $5\text{ m/px}$, MRO HiRISE at $0.25\text{ m/px}$, MGS MOLA laser altimetry, and Mars Odyssey THEMIS IR thermal inertia) with verifiable historical surface records collected by the **MSL Curiosity** rover (RAD, REMS, ChemCam, MAHLI, APXS, and Mastcam instruments across Sols 4189–4844). Built upon this empirical foundation, a deterministic **tRPC and TypeScript** computation engine evaluates two operational paradigms—**Solo Astronaut** versus **Astronaut Accompanied by a Support Rover**—governed by an explicit metabolic oxygen consumption model ($0.076\text{ kg O}_2/\text{h}$, derived from *NASA BVAD*) and a **4-Step Detour Decision Rule** in which biomechanical slope limits ($>22^\circ$) and mandatory return life-support reserves ($\ge 25\%\text{ O}_2$) function as non-negotiable safety filters prior to scientific optimization.
+Unlike passive cartographic viewers or gamified simulations that silently interpolate missing planetary measurements, **MiniMars** enforces a **strict epistemological and scientific data-honesty framework**. The platform fuses the official multi-resolution orbital imagery pyramid from **NASA Mars Trek OGC WMTS** (Viking MDIM 2.1, MRO CTX at $5\text{ m/px}$, MRO HiRISE at $0.25\text{ m/px}$, MGS MOLA laser altimetry, and Mars Odyssey THEMIS IR thermal inertia) with verifiable historical surface records collected by the **MSL Curiosity** rover (RAD, REMS, ChemCam, MAHLI, APXS, and Mastcam instruments across Sols 4189–4844). Built upon this empirical foundation, a deterministic **tRPC and TypeScript** computation engine evaluates two operational paradigms—**Solo Astronaut** versus **Astronaut Accompanied by a Support Rover**—governed by an explicit metabolic oxygen consumption model ($0.076\text{ kg O}_2/\text{h}$, derived from *NASA BVAD*) and a **4-Step Detour Decision Rule** in which biomechanical slope limits ($>22^\circ$) and mandatory return life-support reserves ($\ge 25\%\text{ O}_2$) function as non-negotiable safety filters prior to scientific optimization.
 
 ---
 
@@ -62,7 +68,7 @@ Through [NodeAuditDrawer.tsx](file:///c:/Users/angel/OneDrive/Documentos/GitHub/
 
 ## 4. How Does It Address the Challenge? (*Alignment with the NASA Space Apps Challenge*)
 
-The **Interplanetary Survival Guide** challenge calls for an interactive tool that empowers future human explorers on Mars to interpret complex planetary datasets, balance environmental hazards against terrain constraints and scientific targets, and make life-preserving operational decisions. **EVA Wrist-Pad** directly fulfills every dimension of the challenge through two primary mechanisms:
+The **Interplanetary Survival Guide** challenge calls for an interactive tool that empowers future human explorers on Mars to interpret complex planetary datasets, balance environmental hazards against terrain constraints and scientific targets, and make life-preserving operational decisions. **MiniMars** directly fulfills every dimension of the challenge through two primary mechanisms:
 
 ### 4.1. Operational Synthesis of the Three Survival Layers
 Rather than isolating planetary datasets into disconnected charts, our interface unifies the three decision layers required during an EVA:
@@ -88,18 +94,18 @@ Our application resolves the central operational dilemma of planetary field geol
 
 ## 5. Why Is It Important? (*Scientific, Operational & Educational Impact*)
 
-**EVA Wrist-Pad** advances the state of planetary exploration tools across three critical dimensions:
+**MiniMars** advances the state of planetary exploration tools across three critical dimensions:
 
 ### 5.1. Paradigm Shift: Quantifying Human-Robotic Synergy on the Martian Surface
 For over a decade, *Curiosity* has explored Gale Crater autonomously at meter-scale daily drives. When human explorers arrive on Mars, they will operate under strict metabolic consumables ($\sim 0.076\text{ kg O}_2/\text{h}$) and radiation ceilings. Our work proves quantitatively that **a companion rover does not need to transport the astronaut physically to be life-saving**: by acting as a **scientific force multiplier** (pre-scanning targets and carrying sampling payloads), the rover compresses stationary field-work duration enough to unlock high-value geological detours (Node 4) while preserving the astronaut's $25\%$ emergency oxygen reserve.
 
 ### 5.2. Epistemological Integrity Against Cartographic "Hallucination"
-A pervasive flaw in public-facing space simulators is presenting continuous, fabricated heatmaps over regions where spacecraft never collected data, blurring the line between empirical NASA measurements and software assumptions. **EVA Wrist-Pad** establishes a **Safety-First and Honesty-First Architecture**:
+A pervasive flaw in public-facing space simulators is presenting continuous, fabricated heatmaps over regions where spacecraft never collected data, blurring the line between empirical NASA measurements and software assumptions. **MiniMars** establishes a **Safety-First and Honesty-First Architecture**:
 - It educates users that real planetary datasets are **discrete, asynchronous across Martian Sols, and subject to sensor limitations** (such as REMS anemometer gaps or untraversed steep talus slopes).
 - It enforces the operational rule that **safety is a prerequisite filter, never a variable that can be traded away for higher scientific reward**.
 
 ### 5.3. Democratizing NASA Planetary Archives (PDS, Mars Trek, and BVAD)
-Primary NASA repositories—such as the *Planetary Data System* (PDS Geosciences and Atmospheres nodes), OGC WMTS orbital services, and the *Baseline Values and Assumptions Document (BVAD)*—are often inaccessible to students, mission designers, and the general public due to their fragmented formats. **EVA Wrist-Pad** translates these research-grade archives into an intuitive, first-person tactical experience on Mount Sharp, enabling anyone to understand why the *Boxwork* mineral ridges are vital to decoding the history of liquid water on Mars and how data-driven engineering will keep future astronauts alive.
+Primary NASA repositories—such as the *Planetary Data System* (PDS Geosciences and Atmospheres nodes), OGC WMTS orbital services, and the *Baseline Values and Assumptions Document (BVAD)*—are often inaccessible to students, mission designers, and the general public due to their fragmented formats. **MiniMars** translates these research-grade archives into an intuitive, first-person tactical experience on Mount Sharp, enabling anyone to understand why the *Boxwork* mineral ridges are vital to decoding the history of liquid water on Mars and how data-driven engineering will keep future astronauts alive.
 
 ---
 

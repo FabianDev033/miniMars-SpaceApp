@@ -1,4 +1,8 @@
-# EVA Wrist-Pad | Mount Sharp Boxwork Sector — Interplanetary Survival & Decision Support System
+# MiniMars | Mount Sharp Boxwork Sector — Interplanetary Survival & Decision Support System
+
+<p align="center">
+  <img src="./public/minimars-icon.png" alt="MiniMars Official Logo" width="160" />
+</p>
 
 [![NASA Space Apps Challenge](https://img.shields.io/badge/NASA_Space_Apps-Interplanetary_Survival_Guide-0B3D91?style=for-the-badge&logo=nasa&logoColor=white)](https://www.spaceappschallenge.org/)
 [![Next.js 15](https://img.shields.io/badge/Next.js_15-App_Router-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
@@ -13,32 +17,45 @@
 
 ---
 
-## 1. Project Name
+## 1. Project Name & Team Members
 
-**Official Title:**  
-**EVA Wrist-Pad: Mount Sharp Boxwork Sector — Interplanetary Survival & Decision Support System**  
-*(Repository / Prototype Identifier: `miniMars-SpaceApp`)*
+**Official Project Name:**  
+**MiniMars** *(Mount Sharp Boxwork Sector — Interplanetary Survival & Decision Support System)*  
+*(Repository Identifier: `miniMars-SpaceApp`)*
+
+**Team Members (*Integrantes del Equipo*):**
+- **Jorge Geronimo Agüero López**
+- **Marcos Gabriel Coloma Muños**
+- **Fabian Barzola**
 
 ---
 
 ## 2. Executive Summary (*Abstract*)
 
-Transitioning from robotic surface reconnaissance to future crewed expeditions on Mars requires real-time operational decision-support architectures capable of simultaneously synthesizing orbital topography, in-situ environmental telemetry, geological science value, and life-critical **Portable Life Support System (PLSS)** constraints. **EVA Wrist-Pad** is an interactive web application that emulates a **tactical astronaut wrist-mounted tablet** operating across the polygonal mineral ridge (*Boxwork*) formations of **Mount Sharp (Aeolis Mons)** within **Gale Crater, Mars** ($\text{Lat. } -4.6805^\circ\text{ to } -4.6854^\circ\text{ N}, \text{Lon. } 137.3612^\circ\text{ to } 137.3668^\circ\text{ E}$).
+Transitioning from robotic surface reconnaissance to future crewed expeditions on Mars requires real-time operational decision-support architectures capable of simultaneously synthesizing orbital topography, in-situ environmental telemetry, geological science value, and life-critical **Portable Life Support System (PLSS)** constraints. **MiniMars** is an interactive web application that emulates a **tactical astronaut wrist-mounted tablet** operating across the polygonal mineral ridge (*Boxwork*) formations of **Mount Sharp (Aeolis Mons)** within **Gale Crater, Mars** ($\text{Lat. } -4.6805^\circ\text{ to } -4.6854^\circ\text{ N}, \text{Lon. } 137.3612^\circ\text{ to } 137.3668^\circ\text{ E}$).
 
-Unlike passive cartographic viewers or gamified simulations that silently interpolate missing planetary measurements, **EVA Wrist-Pad** enforces a **strict epistemological and scientific data-honesty framework**. The platform fuses the official multi-resolution orbital imagery pyramid from **NASA Mars Trek OGC WMTS** (Viking MDIM 2.1, MRO CTX at $5\text{ m/px}$, MRO HiRISE at $0.25\text{ m/px}$, MGS MOLA laser altimetry, and Mars Odyssey THEMIS IR thermal inertia) with verifiable historical surface records collected by the **MSL Curiosity** rover (RAD, REMS, ChemCam, MAHLI, APXS, and Mastcam instruments across Sols 4189–4844). Built upon this empirical foundation, a deterministic **tRPC and TypeScript** computation engine evaluates two operational paradigms—**Solo Astronaut** versus **Astronaut Accompanied by a Support Rover**—governed by an explicit metabolic oxygen consumption model ($0.076\text{ kg O}_2/\text{h}$, derived from *NASA BVAD*) and a **4-Step Detour Decision Rule** in which biomechanical slope limits ($>22^\circ$) and mandatory return life-support reserves ($\ge 25\%\text{ O}_2$) function as non-negotiable safety filters prior to scientific optimization.
+Unlike passive cartographic viewers or gamified simulations that silently interpolate missing planetary measurements, **MiniMars** enforces a **strict epistemological and scientific data-honesty framework**. The platform fuses the official multi-resolution orbital imagery pyramid from **NASA Mars Trek OGC WMTS** (Viking MDIM 2.1, MRO CTX at $5\text{ m/px}$, MRO HiRISE at $0.25\text{ m/px}$, MGS MOLA laser altimetry, and Mars Odyssey THEMIS IR thermal inertia) with verifiable historical surface records collected by the **MSL Curiosity** rover (RAD, REMS, ChemCam, MAHLI, APXS, and Mastcam instruments across Sols 4189–4844). Built upon this empirical foundation, a deterministic **tRPC and TypeScript** computation engine evaluates two operational paradigms—**Solo Astronaut** versus **Astronaut Accompanied by a Support Rover**—governed by an explicit metabolic oxygen consumption model ($0.076\text{ kg O}_2/\text{h}$, derived from *NASA BVAD*) and a **4-Step Detour Decision Rule** in which biomechanical slope limits ($>22^\circ$) and mandatory return life-support reserves ($\ge 25\%\text{ O}_2$) function as non-negotiable safety filters prior to scientific optimization.
 
 ---
 
 ## 3. Interface Preview & System Walkthrough
 
-### 3.1. Top Telemetry Bar, Mission Mode Selector & Sequential EVA Player
-![Top Telemetry Bar and EVA Sequence Player](./src/recursos/screenshot-1794751291614.png)
+### 3.1. General Overview — MiniMars Carbon Rose EVA HUD, Compact Decision Bar & Sequential Player
+![General Overview of the MiniMars HUD](./src/recursos/Captura%201%20%E2%80%94%20Vista%20General%20Completa%20del%20HUD.png)
 
-### 3.2. Multi-Layer Tactical Map & Node Provenance Drawer (`[MEASURED]`, `[DERIVED]`, `[SIMULATED]`)
-![Tactical Map Canvas and Node Audit Drawer](./src/recursos/screenshot-1794751252141.png)
+### 3.2. Red Alert Contrast (`Solo Astronaut` Mode) & Live NASA Mars Trek HiRISE Satellite Cartography
+When the **Solo Astronaut** attempts to include the Node 4 scientific detour (`PIA26697`), the 4-Step Decision Engine automatically rejects the detour (`15.0%` remaining $\text{O}_2 < 25\%$ mandatory reserve) while displaying the live **MRO HiRISE ($0.25\text{ m/px}$)** orbital satellite imagery and multi-camera *Curiosity* POV gallery:
 
-### 3.3. MOLA Topographic Elevation Profile & 4-Step Decision Engine Verdict
-![Elevation Profile and 4-Step Decision Engine](./src/recursos/screenshot-1794751321925.png)
+| 4-Step Decision Engine Verdict: Red Alert (`Solo Astronaut` + Detour) | NASA Mars Trek WMTS Satellite Map (`MRO HiRISE`) & Node 4 POV Gallery |
+| :---: | :---: |
+| ![Red Alert Contrast - Decision Engine](./src/recursos/Captura%202.0%20%E2%80%94%20Contraste%20de%20Alerta%20Roja.png) | ![Red Alert Contrast - Satellite Map and POV Drawer](./src/recursos/Captura%202.1%20%E2%80%94%20Contraste%20de%20Alerta%20Roja.png) |
+
+### 3.3. Human-Rover Synergy (`Astronaut + Companion Rover` Mode) & Active Traverse Corridor
+Switching to **Astronaut + Rover** mode reduces stationary sampling overhead at Node 3 ($30 \rightarrow 15\text{ min}$) and Node 4 ($40 \rightarrow 15\text{ min}$), approving the scientific detour with a safe **$28.3\%$ $\text{O}_2$ reserve** ($\ge 25\%$) and **$32.0\%$ rover battery** ($\ge 20\%$) over the high-resolution Martian surface mosaic:
+
+| 4-Step Decision Engine Verdict: Mission Viable (`Astronaut + Rover` + Detour) | Interactive Orbital Traverse Corridor (`Zoom 15`) & Multi-Photo POV HUD |
+| :---: | :---: |
+| ![Human-Rover Synergy - Decision Engine](./src/recursos/Captura%203.0%20%E2%80%94%20Sinergia%20Humano-Rover.png) | ![Human-Rover Synergy - Satellite Map and POV Drawer](./src/recursos/Captura%203.1%20%E2%80%94%20Sinergia%20Humano-Rover.png) |
 
 ### 3.4. Integrated Scientific Audit Modal (3-Tab Jury Verification Suite)
 | Tab A: Data Honesty Matrix (27 Records) | Tab B: Mathematical Survival Model | Tab C: Official Linked NASA Sources (8) |
@@ -49,39 +66,15 @@ Unlike passive cartographic viewers or gamified simulations that silently interp
 
 ## 4. What Did We Develop? (*System Architecture & Technical Implementation*)
 
-We engineered an end-to-end EVA planning, sequential mission playback, and scientific auditing platform designed around the ergonomics of a **16:9 panoramic wrist-mounted Heads-Up Display (HUD)** (`src/components/WristTabletHUD.tsx`), featuring high-contrast tactile controls optimized for pressurized EVA gloves.
+We engineered an end-to-end EVA planning, sequential mission playback, and scientific auditing platform designed around the ergonomics of a **16:9 panoramic wrist-mounted Heads-Up Display (HUD)** (`src/components/WristTabletHUD.tsx`), featuring high-contrast **Carbon Rose** tactile controls optimized for pressurized EVA gloves.
 
-```mermaid
-flowchart LR
-    subgraph NASA["Official NASA Archives & Live Services"]
-        WMTS["NASA Mars Trek OGC WMTS\n(Viking / CTX / HiRISE / MOLA / THEMIS)"]
-        PDS["MSL Curiosity PDS Archives\n(RAD, REMS, ChemCam, MAHLI, Mastcam)"]
-        BVAD["NASA BVAD (2022)\n(0.076 kg O2/h Reference)"]
-    end
+### System Architecture & Data Pipeline
 
-    subgraph Backend["T3 Stack Deterministic Engine (tRPC + Zod + TypeScript)"]
-        DATA["Curated Typed Dataset\n(src/data/boxwork_mission.ts)"]
-        ROUTER["Mission Simulation Router\n(src/server/api/routers/mission.ts)"]
-        RULE["4-Step Detour Decision Filter\n(Safety Prerequisite >= 25% O2)"]
-    end
-
-    subgraph Frontend["16:9 EVA Wrist-Tablet HUD (React 19 + Leaflet + Tailwind)"]
-        HUD["Top Telemetry & Mode Switch\n(Solo vs. Companion Rover)"]
-        MAP["Interactive Multi-Layer Map\n& MOLA Elevation Profile"]
-        DRAWER["First-Person Curiosity POV\n& Node Provenance Drawer"]
-        MODAL["Scientific Audit Modal\n(27-Record Traceability Matrix)"]
-    end
-
-    WMTS --> MAP
-    PDS --> DATA
-    BVAD --> DATA
-    DATA --> ROUTER
-    ROUTER --> RULE
-    RULE --> HUD
-    RULE --> MAP
-    DATA --> DRAWER
-    DATA --> MODAL
-```
+| Architectural Tier | Core Modules & Sources | Operational Responsibility & Data Flow |
+| :--- | :--- | :--- |
+| **1. Official NASA Archives & Live Orbital Services** | • **NASA Mars Trek OGC WMTS** (*Viking / CTX / HiRISE / MOLA / THEMIS*)<br>• **MSL Curiosity PDS Archives** (*RAD, REMS, ChemCam, MAHLI, Mastcam*)<br>• **NASA BVAD (2022)** (*$0.076\text{ kg O}_2/\text{h}$ metabolic baseline*) | Provides live Equirectangular (`EPSG:4326`) orbital satellite tiles directly to the Leaflet cartographic engine, alongside empirical surface measurements and human life-support constants. |
+| **2. Deterministic Backend Engine (T3 Stack)** | • **Curated Typed Dataset** (`src/data/boxwork_mission.ts`)<br>• **Mission Simulation Router** (`src/server/api/routers/mission.ts`)<br>• **4-Step Detour Decision Filter** (*Safety prerequisite $\ge 25\%\text{ O}_2$ & slope $\le 22^\circ$*) | Validates all 27 telemetry records under strict TypeScript/Zod schemas (`[MEASURED]`, `[DERIVED]`, `[SIMULATED]`, or explicit `null` coverage) and computes deterministic EVA time, PLSS oxygen depletion, and rover battery margins via tRPC. |
+| **3. 16:9 EVA Wrist-Tablet HUD (React 19 + Leaflet + Tailwind)** | • **Top Telemetry Bar & Compact Decision Panel** (`TopTelemetryBar.tsx`, `DecisionEnginePanel.tsx`)<br>• **Sequential 5-Stage EVA Player** (`EvaSequencePlayer.tsx`)<br>• **Multi-Layer WMTS Map & MOLA Profile** (`MarsTrekLeafletMap.tsx`, `ElevationProfile.tsx`)<br>• **Curiosity Multi-Photo POV Drawer & Audit Modal** (`NodeAuditDrawer.tsx`, `ScientificAuditModal.tsx`) | Synchronizes real-time orbital cartography, collapsible return projections, step-by-step traverse simulation (`E1`–`E5`), first-person *Curiosity* camera galleries with full-screen Lightbox inspection, and the 27-record scientific audit suite. |
 
 ### 4.1. Multi-Layered Orbital Cartographic Engine (`MarsTrekLeafletMap.tsx`)
 Streams live **NASA/JPL Solar System Treks** OGC WMTS tiles in Equirectangular projection (`EPSG:4326`):
@@ -156,7 +149,7 @@ npm install
 # 3. Start the development server
 npm run dev
 ```
-Open `http://localhost:3000` in your browser to launch the **EVA Wrist-Pad HUD**.
+Open `http://localhost:3000` in your browser to launch the **MiniMars HUD**.
 
 ### Type-Checking & Production Build
 ```bash
