@@ -18,9 +18,9 @@ interface ScientificAuditModalProps {
 type PestanaAuditoria = "MATRIZ" | "MODELO" | "FUENTES";
 
 const BADGE_ORIGEN: Record<DataOrigin, string> = {
-  medido: "border-emerald-500/70 bg-emerald-950/90 text-emerald-300",
-  derivado: "border-sky-500/70 bg-sky-950/90 text-sky-300",
-  simulado: "border-amber-500/70 bg-amber-950/90 text-amber-300",
+  medido: "border-emerald-400 text-emerald-300",
+  derivado: "border-cyan-400 text-cyan-300",
+  simulado: "border-violet-400 text-violet-300",
 };
 
 export function ScientificAuditModal({
@@ -71,19 +71,8 @@ export function ScientificAuditModal({
     if (filtroOrigen === "NULOS") return item.registro.valor === null;
     return item.registro.clasificacion === filtroOrigen;
   });
-
-  const totalMedidos = todosLosRegistros.filter(
-    (r) => r.registro.clasificacion === "medido"
-  ).length;
-  const totalDerivados = todosLosRegistros.filter(
-    (r) => r.registro.clasificacion === "derivado"
-  ).length;
-  const totalSimulados = todosLosRegistros.filter(
-    (r) => r.registro.clasificacion === "simulado"
-  ).length;
-  const totalNulos = todosLosRegistros.filter(
-    (r) => r.registro.valor === null
-  ).length;
+  const paradaN3 = nodos.find((nodo) => nodo.orden === 3)?.duracionParadaMin;
+  const paradaN4 = nodos.find((nodo) => nodo.orden === 4)?.duracionParadaMin;
 
   const fuentesOficiales = [
     {
@@ -141,24 +130,24 @@ export function ScientificAuditModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/85 p-3 sm:p-6 backdrop-blur-md">
-      <div className="flex max-h-[92vh] w-full max-w-[1380px] flex-col justify-between overflow-hidden rounded-3xl border-2 border-cyan-400/80 bg-[#080d1a] p-4 sm:p-6 font-mono text-slate-100 shadow-[0_0_80px_rgba(34,211,238,0.28)]">
+      <div className="flex h-[calc(100vh-3rem)] w-full max-w-none flex-col overflow-hidden rounded-2xl border border-slate-800 bg-[#0d0d10] p-4 font-mono text-slate-100 shadow-2xl sm:p-6">
         {/* CABECERA DEL MODAL */}
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
           <div>
-            <span className="rounded border border-cyan-500/50 bg-cyan-950 px-2 py-0.5 text-[10px] font-black uppercase tracking-widest text-cyan-300">
-              DOCUMENTACIÓN INTEGRADA PARA JURADO NASA SPACE APPS
+            <span className="text-[11px] uppercase tracking-[0.18em] text-slate-400">
+              Auditoría científica · Trazabilidad de datos
             </span>
-            <h2 className="mt-1 text-base sm:text-xl font-black text-white">
-              AUDITORÍA CIENTÍFICA, TRAZABILIDAD DE DATOS Y FUENTES OFICIALES NASA
+            <h2 className="mt-1 text-lg font-bold text-slate-100 sm:text-2xl">
+              Mount Sharp — sector boxwork
             </h2>
           </div>
 
           <button
             type="button"
             onClick={onCerrar}
-            className="min-h-[44px] rounded-xl border-2 border-rose-500/70 bg-rose-950/60 px-4 py-2 text-xs font-black uppercase text-rose-200 transition-all hover:bg-rose-900 active:scale-95"
+            className="min-h-[44px] rounded-xl border border-[#f07eb4] bg-transparent px-4 py-2 text-sm font-medium text-[#f07eb4] transition-colors hover:bg-rose-950/30 active:scale-95"
           >
-            [✕ Cerrar Auditoría]
+            ✕ Cerrar auditoría
           </button>
         </div>
 
@@ -167,37 +156,37 @@ export function ScientificAuditModal({
           <button
             type="button"
             onClick={() => setPestana("MATRIZ")}
-            className={`min-h-[48px] rounded-xl border-2 px-3 py-2 text-left text-xs font-black uppercase transition-all ${
+            className={`min-h-[52px] rounded-xl border px-4 py-3 text-left text-sm font-medium transition-colors ${
               pestana === "MATRIZ"
-                ? "border-cyan-400 bg-cyan-500/20 text-white shadow-[0_0_15px_rgba(34,211,238,0.25)]"
-                : "border-slate-800 bg-slate-900/80 text-slate-400 hover:border-slate-600"
+                ? "border-cyan-400 bg-cyan-400 text-slate-950"
+                : "border-slate-800 bg-transparent text-slate-200 hover:border-slate-600"
             }`}
           >
-            Pestaña A: Matriz de Honestidad de Datos ({todosLosRegistros.length})
+            A · Honestidad de datos
           </button>
 
           <button
             type="button"
             onClick={() => setPestana("MODELO")}
-            className={`min-h-[48px] rounded-xl border-2 px-3 py-2 text-left text-xs font-black uppercase transition-all ${
+            className={`min-h-[52px] rounded-xl border px-4 py-3 text-left text-sm font-medium transition-colors ${
               pestana === "MODELO"
-                ? "border-amber-400 bg-amber-500/20 text-white shadow-[0_0_15px_rgba(251,191,36,0.25)]"
-                : "border-slate-800 bg-slate-900/80 text-slate-400 hover:border-slate-600"
+                ? "border-cyan-400 bg-cyan-400 text-slate-950"
+                : "border-slate-800 bg-transparent text-slate-200 hover:border-slate-600"
             }`}
           >
-            Pestaña B: Modelo Matemático de Supervivencia
+            B · Modelo de supervivencia
           </button>
 
           <button
             type="button"
             onClick={() => setPestana("FUENTES")}
-            className={`min-h-[48px] rounded-xl border-2 px-3 py-2 text-left text-xs font-black uppercase transition-all ${
+            className={`min-h-[52px] rounded-xl border px-4 py-3 text-left text-sm font-medium transition-colors ${
               pestana === "FUENTES"
-                ? "border-emerald-400 bg-emerald-500/20 text-white shadow-[0_0_15px_rgba(16,185,129,0.25)]"
-                : "border-slate-800 bg-slate-900/80 text-slate-400 hover:border-slate-600"
+                ? "border-cyan-400 bg-cyan-400 text-slate-950"
+                : "border-slate-800 bg-transparent text-slate-200 hover:border-slate-600"
             }`}
           >
-            Pestaña C: Fuentes Oficiales Vinculadas ({fuentesOficiales.length})
+            C · Fuentes oficiales
           </button>
         </div>
 
@@ -207,85 +196,82 @@ export function ScientificAuditModal({
           {pestana === "MATRIZ" && (
             <div className="space-y-3">
               {/* Filtros rápidos y contadores de trazabilidad */}
-              <div className="flex flex-wrap items-center justify-between gap-2 rounded-xl border border-slate-800 bg-slate-900/90 p-2.5 text-xs">
+              <div className="flex flex-wrap items-center justify-between gap-2 py-1 text-xs">
                 <div className="flex flex-wrap items-center gap-1.5">
                   <button
                     type="button"
                     onClick={() => setFiltroOrigen("TODOS")}
-                    className={`rounded-lg border px-2.5 py-1 font-bold ${
+                    className={`min-h-10 rounded-xl border px-4 py-2 font-medium ${
                       filtroOrigen === "TODOS"
-                        ? "border-white bg-slate-700 text-white"
-                        : "border-slate-700 bg-slate-950 text-slate-400"
+                        ? "border-cyan-400 bg-cyan-400 text-slate-950"
+                        : "border-slate-800 bg-transparent text-slate-200"
                     }`}
                   >
-                    TODOS ({todosLosRegistros.length})
+                    Todos
                   </button>
                   <button
                     type="button"
                     onClick={() => setFiltroOrigen("medido")}
-                    className={`rounded-lg border px-2.5 py-1 font-bold ${
+                    className={`min-h-10 rounded-xl border px-4 py-2 font-medium ${
                       filtroOrigen === "medido"
-                        ? "border-emerald-400 bg-emerald-950 text-emerald-200"
-                        : "border-slate-700 bg-slate-950 text-emerald-400"
+                        ? "border-cyan-400 bg-cyan-400 text-slate-950"
+                        : "border-slate-800 bg-transparent text-slate-200"
                     }`}
                   >
-                    [MEDIDO] ({totalMedidos})
+                    Medido
                   </button>
                   <button
                     type="button"
                     onClick={() => setFiltroOrigen("derivado")}
-                    className={`rounded-lg border px-2.5 py-1 font-bold ${
+                    className={`min-h-10 rounded-xl border px-4 py-2 font-medium ${
                       filtroOrigen === "derivado"
-                        ? "border-sky-400 bg-sky-950 text-sky-200"
-                        : "border-slate-700 bg-slate-950 text-sky-400"
+                        ? "border-cyan-400 bg-cyan-400 text-slate-950"
+                        : "border-slate-800 bg-transparent text-slate-200"
                     }`}
                   >
-                    [DERIVADO] ({totalDerivados})
+                    Derivado
                   </button>
                   <button
                     type="button"
                     onClick={() => setFiltroOrigen("simulado")}
-                    className={`rounded-lg border px-2.5 py-1 font-bold ${
+                    className={`min-h-10 rounded-xl border px-4 py-2 font-medium ${
                       filtroOrigen === "simulado"
-                        ? "border-amber-400 bg-amber-950 text-amber-200"
-                        : "border-slate-700 bg-slate-950 text-amber-400"
+                        ? "border-cyan-400 bg-cyan-400 text-slate-950"
+                        : "border-slate-800 bg-transparent text-slate-200"
                     }`}
                   >
-                    [SIMULADO] ({totalSimulados})
+                    Simulado
                   </button>
                   <button
                     type="button"
                     onClick={() => setFiltroOrigen("NULOS")}
-                    className={`rounded-lg border px-2.5 py-1 font-bold ${
+                    className={`min-h-10 rounded-xl border px-4 py-2 font-medium ${
                       filtroOrigen === "NULOS"
-                        ? "border-rose-400 bg-rose-950 text-rose-200"
-                        : "border-slate-700 bg-slate-950 text-rose-300"
+                        ? "border-cyan-400 bg-cyan-400 text-slate-950"
+                        : "border-slate-800 bg-transparent text-slate-200"
                     }`}
                   >
-                    ⚠ COBERTURA NULA EXPLÍCITA ({totalNulos})
+                    Sin cobertura
                   </button>
                 </div>
 
                 <span className="text-[11px] text-slate-400">
-                  Generado automáticamente desde <code>src/data/boxwork_mission.ts</code>
+                  Mostrando {registrosFiltrados.length} de {todosLosRegistros.length} variables
                 </span>
               </div>
 
               {/* Tabla resumen de variables */}
-              <div className="overflow-x-auto rounded-xl border border-slate-800">
-                <table className="w-full border-collapse text-left text-xs">
+              <div className="h-full overflow-auto rounded-2xl border border-slate-800 bg-slate-900">
+                <table className="w-full min-w-[760px] border-collapse text-left text-xs">
                   <thead>
-                    <tr className="border-b border-slate-800 bg-slate-900 text-[11px] uppercase text-slate-400">
-                      <th className="p-2.5">Nodo / Contexto</th>
-                      <th className="p-2.5">Variable</th>
-                      <th className="p-2.5">Valor / Estado Cobertura</th>
-                      <th className="p-2.5">Clasificación</th>
-                      <th className="p-2.5">Instrumento</th>
-                      <th className="p-2.5">Sol / Fecha</th>
-                      <th className="p-2.5">Fuente</th>
+                    <tr className="border-b border-slate-800 text-[11px] uppercase tracking-wider text-slate-400">
+                      <th className="p-3">Variable</th>
+                      <th className="p-3">Valor</th>
+                      <th className="p-3">Tipo</th>
+                      <th className="p-3">Fuente</th>
                     </tr>
                   </thead>
-                  <tbody className="divide-y divide-slate-800/80 bg-slate-950/70">
+                  <tbody className="divide-y divide-slate-800/80">
                     {registrosFiltrados.map(({ contextoNodo, capa, registro }) => {
                       const esNulo = registro.valor === null;
                       return (
@@ -295,18 +281,15 @@ export function ScientificAuditModal({
                             esNulo ? "bg-slate-900/90" : "hover:bg-slate-900/50"
                           }
                         >
-                          <td className="p-2.5">
-                            <div className="font-bold text-cyan-300">
-                              {contextoNodo}
+                          <td className="p-3">
+                            <div className="font-bold text-slate-100">
+                              {registro.nombre}
                             </div>
-                            <div className="text-[10px] text-slate-500">
-                              {capa}
+                            <div className="mt-0.5 text-[11px] text-slate-400">
+                              {contextoNodo} · {capa}
                             </div>
                           </td>
-                          <td className="p-2.5 font-bold text-white">
-                            {registro.nombre}
-                          </td>
-                          <td className="p-2.5">
+                          <td className="p-3 font-bold text-slate-100">
                             {esNulo ? (
                               <div className="rounded border border-slate-600 bg-slate-800 px-2 py-1 text-[11px] font-bold text-slate-200">
                                 Sin cobertura/medición directa (No extrapolado)
@@ -325,30 +308,27 @@ export function ScientificAuditModal({
                               </span>
                             )}
                           </td>
-                          <td className="p-2.5">
+                          <td className="p-3">
                             <span
-                              className={`rounded border px-2 py-0.5 text-[10px] font-black uppercase ${
+                              className={`rounded-lg border px-2.5 py-1 text-[11px] font-medium capitalize ${
                                 BADGE_ORIGEN[registro.clasificacion]
                               }`}
                             >
-                              [{registro.clasificacion.toUpperCase()}]
+                              {registro.clasificacion}
                             </span>
                           </td>
-                          <td className="p-2.5 text-slate-300">
-                            {registro.instrumento}
-                          </td>
-                          <td className="p-2.5 text-slate-300">
-                            {registro.fechaOSol}
-                          </td>
-                          <td className="p-2.5">
+                          <td className="p-3">
                             <a
                               href={registro.fuenteUrl}
                               target="_blank"
                               rel="noreferrer"
-                              className="rounded border border-cyan-500/40 bg-slate-900 px-2 py-1 text-[10px] font-bold text-cyan-300 hover:bg-slate-800"
+                              className="font-medium text-cyan-300 underline decoration-cyan-900 underline-offset-4 transition-colors hover:text-cyan-200"
                             >
-                              Abrir ↗
+                              {registro.instrumento} ↗
                             </a>
+                            <p className="mt-1 text-[11px] text-slate-400">
+                              {registro.fechaOSol}
+                            </p>
                           </td>
                         </tr>
                       );
@@ -361,117 +341,107 @@ export function ScientificAuditModal({
 
           {/* PESTAÑA B: MODELO MATEMÁTICO DE SUPERVIVENCIA */}
           {pestana === "MODELO" && (
-            <div className="space-y-4">
-              <div className="rounded-2xl border border-amber-500/50 bg-amber-950/20 p-4">
-                <h3 className="text-sm font-black uppercase text-amber-300">
-                  1. Ecuaciones Fundamentales del Motor de Supervivencia EVA
-                </h3>
-                <div className="mt-2.5 grid grid-cols-1 gap-3 md:grid-cols-2">
-                  <div className="rounded-xl border border-slate-700 bg-slate-950/90 p-3">
-                    <span className="text-[10px] font-bold uppercase text-cyan-400">
-                      Ecuación de Tiempo Operativo
-                    </span>
-                    <p className="mt-1 text-xs sm:text-sm font-black text-white">
-                      Tiempo total de EVA = Desplazamiento de ida + Paradas
-                      científicas + Desplazamiento de regreso
-                    </p>
-                    <p className="mt-1.5 text-[11px] text-slate-300">
-                      El astronauta camina todo el recorrido a la misma velocidad
-                      ({parametros.velocidadCaminataKmHora} km/h) tanto en modo{" "}
-                      <strong>Astronauta Solo</strong> como en{" "}
-                      <strong>Astronauta + Rover de Apoyo</strong>.
-                    </p>
-                  </div>
+            <div className="space-y-4 pb-2">
+              <div className="grid grid-cols-1 gap-3 lg:grid-cols-2">
+                <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+                  <p className="text-[11px] uppercase tracking-wider text-slate-400">Tiempo total de EVA</p>
+                  <h3 className="mt-3 text-xl font-bold text-cyan-300">Ida + Ciencia + Regreso</h3>
+                  <p className="mt-2 text-xs text-slate-300">Misma velocidad en ambos modos: {parametros.velocidadCaminataKmHora} km/h</p>
+                </section>
+                <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+                  <p className="text-[11px] uppercase tracking-wider text-slate-400">Oxígeno utilizado</p>
+                  <h3 className="mt-3 text-xl font-bold text-cyan-300">Horas de EVA × {parametros.tasaOxigenoKgHora} kg/h</h3>
+                  <p className="mt-2 text-xs text-slate-300">Referencia de magnitud: NASA BVAD 2022</p>
+                </section>
+              </div>
 
-                  <div className="rounded-xl border border-slate-700 bg-slate-950/90 p-3">
-                    <span className="text-[10px] font-bold uppercase text-emerald-400">
-                      Ecuación Metabólica de Oxígeno
-                    </span>
-                    <p className="mt-1 text-xs sm:text-sm font-black text-white">
-                      Oxígeno utilizado = Horas de EVA × 0.076 kg/h
-                    </p>
-                    <p className="mt-1.5 text-[11px] text-slate-300">
-                      El valor de <strong>0.076 kg/h</strong> proviene del
-                      documento{" "}
-                      <em>
-                        NASA Life Support Baseline Values and Assumptions (BVAD)
-                      </em>{" "}
-                      como referencia de magnitud para un sistema cerrado.
-                    </p>
-                  </div>
+              <p className="text-[11px] uppercase tracking-[0.16em] text-slate-400">
+                Reglas del prototipo · simuladas, no son límites de NASA
+              </p>
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+                <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+                  <p className="text-2xl font-bold text-violet-300">{parametros.capacidadInicialO2Kg.toFixed(2)} kg</p>
+                  <p className="mt-2 text-xs text-slate-300">Tanque ≈ 5 h de autonomía</p>
+                </section>
+                <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+                  <p className="text-2xl font-bold text-violet-300">{parametros.reservaMinimaO2Porcentaje} %</p>
+                  <p className="mt-2 text-xs text-slate-300">Reserva mínima de O₂ al regreso</p>
+                </section>
+                <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+                  <p className="text-2xl font-bold text-violet-300">
+                    {paradaN3?.solo ?? 30} → {paradaN3?.conRover ?? 15} min
+                  </p>
+                  <p className="mt-2 text-xs text-slate-300">
+                    Parada científica con rover · N4: {paradaN4?.solo ?? 40} → {paradaN4?.conRover ?? 15} min
+                  </p>
+                </section>
+              </div>
+
+              <section className="rounded-2xl border border-slate-800 bg-slate-900 p-4">
+                <p className="text-[11px] uppercase tracking-wider text-slate-400">Filtro de seguridad · desvío a N4</p>
+                <div className="mt-4 space-y-4">
+                  {[
+                    { nombre: "Astronauta solo", valor: 18.3, color: "bg-rose-400", estado: "rechazado", estadoColor: "text-rose-300" },
+                    { nombre: "Con rover", valor: 26.7, color: "bg-emerald-300", estado: "aprobado", estadoColor: "text-emerald-300" },
+                  ].map((fila) => (
+                    <div key={fila.nombre} className="grid grid-cols-[120px_1fr_auto] items-center gap-3 text-xs sm:grid-cols-[170px_1fr_auto]">
+                      <span className="text-slate-200">{fila.nombre}</span>
+                      <div className="relative h-2 overflow-visible rounded-full bg-slate-800">
+                        <div className={`h-full rounded-full ${fila.color}`} style={{ width: `${(fila.valor / 40) * 100}%` }} />
+                        <span className="absolute -top-1 h-4 w-0.5 bg-white" style={{ left: `${(parametros.reservaMinimaO2Porcentaje / 40) * 100}%` }} />
+                      </div>
+                      <span className={`whitespace-nowrap font-bold ${fila.estadoColor}`}>{fila.valor} % · {fila.estado}</span>
+                    </div>
+                  ))}
                 </div>
-              </div>
-
-              {/* Aclaración de Honestidad Científica sobre Reglas del Prototipo */}
-              <div className="rounded-2xl border border-cyan-500/40 bg-slate-900/90 p-4">
-                <h3 className="text-sm font-black uppercase text-cyan-300">
-                  2. Distinción Estricta entre Referencia NASA y Reglas del Prototipo
-                </h3>
-                <ul className="mt-2 list-disc space-y-1.5 pl-5 text-xs text-slate-200">
-                  <li>
-                    <strong>Capacidad inicial del tanque PLSS (0.380 kg = 5.0 h)</strong> y{" "}
-                    <strong>Umbral de Reserva Mínima del 25%</strong> son{" "}
-                    <span className="text-amber-300 font-bold">
-                      parámetros explícitos del prototipo [SIMULADO]
-                    </span>
-                    , no límites médicos ni operativos certificados por NASA.
-                  </li>
-                  <li>
-                    <strong>Función explícita del Rover acompañante:</strong>{" "}
-                    Transportar herramientas/muestras y realizar pre-escaneo
-                    óptico de objetivos. Esto reduce la duración operativa de la
-                    Parada Científica 1 de <strong>30 min a 15 min</strong> y la
-                    del Desvío (Nodo 4) de <strong>40 min a 15 min</strong>, a
-                    cambio de consumir <strong>Energía del Rover (%)</strong>.
-                  </li>
-                  <li>
-                    <strong>Filtro de Seguridad Previo (Regla de 4 Pasos):</strong>{" "}
-                    La seguridad actúa como filtro previo innegociable. El Nodo
-                    2 (PIA26364, pendiente 24.5° &gt; 22°) queda excluido, y el
-                    desvío al Nodo 4 (PIA26697) se rechaza en modo{" "}
-                    <em>Astronauta Solo</em> porque deja el O2 de retorno en{" "}
-                    <strong>18.3% (&lt; 25%)</strong>, pero se aprueba en modo{" "}
-                    <em>Con Rover</em> porque retorna con{" "}
-                    <strong>26.7% (&gt;= 25%)</strong>.
-                  </li>
-                </ul>
-              </div>
+                <p className="mt-4 text-xs text-slate-400">
+                  Escala 0–40 % · marca de reserva {parametros.reservaMinimaO2Porcentaje} % · N2 (24.5° &gt; 22°) se excluye antes de evaluar el desvío.
+                </p>
+                <p className="mt-2 text-xs text-slate-400">
+                  El rover reduce la parada N3 de {paradaN3?.solo ?? 30} a {paradaN3?.conRover ?? 15} min y N4 de {paradaN4?.solo ?? 40} a {paradaN4?.conRover ?? 15} min al transportar instrumentos y hacer un preescaneo óptico.
+                </p>
+              </section>
             </div>
           )}
 
           {/* PESTAÑA C: FUENTES OFICIALES VINCULADAS */}
           {pestana === "FUENTES" && (
-            <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-              {fuentesOficiales.map((f, idx) => (
-                <div
-                  key={idx}
-                  className="flex flex-col justify-between rounded-2xl border border-slate-800 bg-slate-900/90 p-3.5 hover:border-cyan-500/50"
-                >
-                  <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-cyan-400">
-                      {f.categoria}
-                    </span>
-                    <h4 className="mt-1 text-xs sm:text-sm font-black text-white">
-                      {f.titulo}
-                    </h4>
-                    <p className="mt-1 text-[11px] text-slate-300">{f.uso}</p>
-                  </div>
+            <div>
+              <div className="grid grid-cols-1 gap-3 md:grid-cols-2 2xl:grid-cols-3">
+                {fuentesOficiales.map((f, idx) => (
+                  <div
+                    key={idx}
+                    className="flex min-h-[240px] flex-col justify-between rounded-2xl border border-slate-800 bg-slate-900 p-4 transition-colors hover:border-cyan-500/50"
+                  >
+                    <div>
+                      <span className="text-[10px] font-medium uppercase tracking-wider text-slate-400">
+                        {f.categoria}
+                      </span>
+                      <h4 className="mt-1 text-xs font-black text-white sm:text-sm">
+                        {f.titulo}
+                      </h4>
+                      <p className="mt-1 text-[11px] text-slate-300">{f.uso}</p>
+                    </div>
 
-                  <div className="mt-3 flex items-center justify-between border-t border-slate-800 pt-2">
-                    <span className="truncate text-[10px] text-slate-500">
-                      {f.url}
-                    </span>
-                    <a
-                      href={f.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="ml-2 shrink-0 rounded-lg border border-emerald-500/50 bg-emerald-950/70 px-3 py-1 text-[11px] font-black text-emerald-300 hover:bg-emerald-900"
-                    >
-                      Abrir Fuente Oficial ↗
-                    </a>
+                    <div className="mt-3 flex items-center justify-between border-t border-slate-800 pt-2">
+                      <span className="truncate text-[10px] text-slate-500">
+                        {new URL(f.url).hostname}
+                      </span>
+                      <a
+                        href={f.url}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="ml-2 shrink-0 rounded-lg border border-cyan-400 px-3 py-2 text-[11px] font-medium text-cyan-300 transition-colors hover:bg-cyan-950/40"
+                      >
+                        Abrir ↗
+                      </a>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <p className="mt-3 text-xs text-slate-400">
+                Mostrando {fuentesOficiales.length} de {fuentesOficiales.length} fuentes vinculadas
+              </p>
             </div>
           )}
         </div>
@@ -481,9 +451,6 @@ export function ScientificAuditModal({
           <span>
             NASA Space Apps Challenge — Desafío: Guía de Supervivencia
             Interplanetaria (Mount Sharp / Sector Boxwork)
-          </span>
-          <span className="text-cyan-300 font-bold">
-            Stack T3 (Next.js + TypeScript Estricto + tRPC + Tailwind CSS)
           </span>
         </div>
       </div>

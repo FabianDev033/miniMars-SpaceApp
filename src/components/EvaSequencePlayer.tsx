@@ -206,8 +206,7 @@ export function EvaSequencePlayer({
   const { evaluacionDesvio, estadoMision } = simulation;
 
   return (
-    <section className="rounded-2xl border-2 border-cyan-500/50 bg-slate-900/95 px-3.5 py-2.5 font-mono shadow-lg">
-      {/* FILA SUPERIOR: BOTONES GRANDES PARA GUANTES + INDICADOR DE LAS 5 ETAPAS + MÉTRICAS DE ETAPA */}
+    <section className="rounded-2xl border border-slate-800 bg-slate-900 px-3.5 py-3 font-mono">
       <div className="flex flex-wrap items-center justify-between gap-2">
         {/* Controles Secuenciales para Guantes Presurizados */}
         <div className="flex flex-wrap items-center gap-1.5">
@@ -215,26 +214,26 @@ export function EvaSequencePlayer({
             type="button"
             disabled={etapaActual <= 1}
             onClick={() => onChangeEtapa(Math.max(1, etapaActual - 1))}
-            className="min-h-[42px] rounded-xl border-2 border-slate-600 bg-slate-800 px-3 py-1.5 text-xs font-black text-slate-100 transition-all hover:border-cyan-400 active:scale-95 disabled:opacity-40"
+            className="min-h-[42px] rounded-xl border border-slate-800 bg-transparent px-3 py-1.5 text-xs font-medium text-slate-400 transition-colors hover:text-slate-100 disabled:opacity-40"
           >
-            [◀ Paso Anterior]
+            ‹ Etapa anterior
           </button>
 
           <button
             type="button"
             disabled={etapaActual >= 5}
             onClick={() => onChangeEtapa(Math.min(5, etapaActual + 1))}
-            className="min-h-[42px] rounded-xl border-2 border-cyan-400 bg-cyan-500/25 px-3.5 py-1.5 text-xs font-black text-white shadow-[0_0_15px_rgba(34,211,238,0.25)] transition-all hover:bg-cyan-500/35 active:scale-95 disabled:opacity-40"
+            className="min-h-[42px] rounded-xl border border-cyan-400 bg-cyan-400 px-4 py-1.5 text-xs font-medium text-slate-950 transition-colors hover:bg-cyan-300 disabled:opacity-40"
           >
-            [▶ Siguiente Etapa EVA]
+            Siguiente etapa ›
           </button>
 
           <button
             type="button"
             onClick={() => onChangeEtapa(1)}
-            className="min-h-[42px] rounded-xl border-2 border-amber-500/60 bg-amber-950/50 px-3 py-1.5 text-xs font-black text-amber-200 transition-all hover:border-amber-400 active:scale-95"
+            className="min-h-[42px] rounded-xl border border-[#f07eb4] bg-transparent px-3 py-1.5 text-xs font-medium text-[#f07eb4] transition-colors hover:bg-rose-950/30 active:scale-95"
           >
-            [↺ Reiniciar Misión]
+            ↺ Reiniciar misión
           </button>
         </div>
 
@@ -247,9 +246,9 @@ export function EvaSequencePlayer({
               onClick={() => onChangeEtapa(step)}
               className={`h-9 w-9 rounded-lg border font-mono text-xs font-black transition-all ${
                 etapaActual === step
-                  ? "border-cyan-300 bg-cyan-400 text-slate-950 shadow-[0_0_10px_#22d3ee]"
+                ? "border-cyan-400 bg-cyan-400 text-slate-950"
                   : step < etapaActual
-                  ? "border-emerald-500/60 bg-emerald-950/60 text-emerald-300"
+                  ? "border-slate-700 bg-slate-800 text-slate-300"
                   : "border-slate-700 bg-slate-950 text-slate-400 hover:border-slate-500"
               }`}
             >
@@ -258,35 +257,41 @@ export function EvaSequencePlayer({
           ))}
         </div>
 
-        {/* Telemetría instantánea acumulada en la Etapa Actual */}
-        <div className="flex flex-wrap items-center gap-2 rounded-xl border border-slate-700 bg-slate-950/90 px-3 py-1.5 text-xs">
-          <span className="text-slate-400">EN ETAPA {etapaActual}/5:</span>
-          <span
-            className={`font-black ${
-              estadoEtapa.oxigenoRestantePct < 25
-                ? "text-rose-400"
-                : "text-emerald-300"
-            }`}
-          >
-            O2: {estadoEtapa.oxigenoRestantePct}% (
-            {estadoEtapa.oxigenoRestanteKg.toFixed(3)} kg)
-          </span>
-          <span className="text-slate-600">|</span>
-          <span className="font-black text-cyan-300">
-            Tiempo EVA: {estadoEtapa.tiempoAcumuladoMin} min
-          </span>
-          <span className="text-slate-600">|</span>
-          <span className="font-black text-amber-300">
-            Batería Rover:{" "}
-            {mode === "conRover"
-              ? `${estadoEtapa.bateriaRoverPct}%`
-              : "100% (Base)"}
-          </span>
+        <div className="flex items-center gap-1 rounded-xl border border-slate-800 p-1">
+          {(["solo", "conRover"] as const).map((missionMode) => (
+            <button
+              key={missionMode}
+              type="button"
+              onClick={() => onChangeMode(missionMode)}
+              aria-pressed={mode === missionMode}
+              className={`min-h-[38px] rounded-lg px-3 py-1.5 text-xs transition-colors ${
+                mode === missionMode
+                  ? "bg-cyan-400 text-slate-950"
+                  : "text-slate-300 hover:bg-slate-800"
+              }`}
+            >
+              {missionMode === "solo" ? "Astronauta solo" : "Astronauta + rover"}
+            </button>
+          ))}
         </div>
       </div>
 
-      {/* FILA INFERIOR: TÍTULO DE ETAPA + PANEL INTERACTIVO EN ETAPA 4 Y SELLO FINAL EN ETAPA 5 */}
-      <div className="mt-2 flex flex-col justify-between gap-2 border-t border-slate-800 pt-2 lg:flex-row lg:items-center">
+      <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-slate-800 pt-3 text-xs">
+        <span className="rounded-lg border border-cyan-400/60 px-3 py-1.5 text-cyan-300">
+          Etapa {etapaActual}/5
+        </span>
+        <span className="rounded-lg border border-slate-800 px-3 py-1.5 text-slate-200">
+          O₂ {estadoEtapa.oxigenoRestantePct}% · {estadoEtapa.oxigenoRestanteKg.toFixed(3)} kg
+        </span>
+        <span className="rounded-lg border border-slate-800 px-3 py-1.5 text-slate-200">
+          Tiempo EVA {estadoEtapa.tiempoAcumuladoMin} min
+        </span>
+        <span className="rounded-lg border border-slate-800 px-3 py-1.5 text-slate-200">
+          Batería rover {mode === "conRover" ? `${estadoEtapa.bateriaRoverPct}%` : "100%"}
+        </span>
+      </div>
+
+      <div className="mt-3 flex flex-col justify-between gap-2 border-t border-slate-800 pt-3 lg:flex-row lg:items-center">
         <div>
           <h3 className="text-xs sm:text-sm font-black text-white">
             {estadoEtapa.titulo}

@@ -4,12 +4,25 @@
 
 :root {
   color-scheme: dark;
+  --surface-page: #0d0d10;
+  --accent-cyan: #6fd6e0;
 }
 
 body {
-  background-color: #060911;
-  color: #f8fafc;
+  background-color: var(--surface-page);
+  color: #e8e7ef;
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
+}
+
+::selection {
+  color: #0d0d10;
+  background: var(--accent-cyan);
 }
