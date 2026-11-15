@@ -127,20 +127,33 @@ export function NodeAuditDrawer({
 
   const esPeligroAlto =
     nodo.riesgoTramo.nivel === "alto" || nodo.riesgoTramo.pendienteGrados > 22;
+  const todosLosRegistros = [
+    ...nodo.capas.movilidadTerreno,
+    ...nodo.capas.seguridadSupervivencia,
+    ...nodo.capas.interesCientifico,
+  ];
+  const encontrarRegistro = (patron: RegExp) =>
+    todosLosRegistros.find((registro) => patron.test(registro.nombre));
+  const indicadores = [
+    { titulo: "Temperatura diurna del aire", registro: encontrarRegistro(/temperatura/i) },
+    { titulo: "Presión barométrica", registro: encontrarRegistro(/presión/i) },
+    { titulo: "Radiación cósmica (GCR)", registro: encontrarRegistro(/radiación|dosis/i) },
+    { titulo: "Contexto científico", registro: encontrarRegistro(/contexto|química|morfología/i) },
+  ];
 
   return (
-    <div className="flex h-full flex-col justify-between gap-2 overflow-hidden">
-      {/* CABECERA DE AUDITORÍA DEL NODO Y SELECTOR RÁPIDO CON GUANTES */}
-      <div className="border-b border-slate-800 pb-2">
+    <div className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto">
+      {/* CABECERA DE AUDITORÍA DEL NODO Y VISOR POV CON GALERÍA DE IMÁGENES REALES */}
+      <div className="rounded-2xl border border-[#9b633f] bg-[#87502f] p-3 font-mono text-white">
         <div className="flex flex-wrap items-center justify-between gap-1.5 font-mono">
-          <span className="rounded border border-cyan-500/50 bg-cyan-950/80 px-2 py-0.5 text-[11px] font-black text-cyan-300">
-            NODO {nodo.orden} • {nodo.imagenPov.codigoPia}
+          <span className="rounded-lg bg-[#4f2b1b] px-3 py-2 text-xs font-medium">
+            Nodo N{nodo.orden} · {nodo.imagenPov.codigoPia}
           </span>
           <span
-            className={`rounded border px-2 py-0.5 text-[10px] font-extrabold ${
+            className={`rounded-lg bg-[#4f2b1b] px-3 py-2 text-[10px] font-medium ${
               nodo.esRutaHistoricaCuriosity
-                ? "border-emerald-500/50 bg-emerald-950/80 text-emerald-300"
-                : "border-amber-500/50 bg-amber-950/80 text-amber-300"
+                ? "text-emerald-200"
+                : "text-amber-200"
             }`}
           >
             {nodo.esRutaHistoricaCuriosity
@@ -149,136 +162,185 @@ export function NodeAuditDrawer({
           </span>
         </div>
 
-        <h2 className="mt-1 font-mono text-sm sm:text-base font-black text-white">
+        <h2 className="mt-2 font-mono text-sm font-bold sm:text-base">
           {nodo.nombre}
         </h2>
 
-        {/* Botones rápidos N1..N4 para cambio con guantes */}
-        <div className="mt-1.5 grid grid-cols-4 gap-1.5 font-mono">
-          {nodos.map((n) => (
-            <button
-              key={n.id}
-              type="button"
-              onClick={() => onSelectNodo(n.id)}
-              className={`min-h-[36px] rounded-lg border text-xs font-extrabold transition-all active:scale-95 ${
-                n.id === nodo.id
-                  ? "border-cyan-400 bg-cyan-500/25 text-white"
-                  : "border-slate-800 bg-slate-950/80 text-slate-400 hover:border-slate-600"
-              }`}
-            >
-              N{n.orden} ({n.imagenPov.codigoPia})
-            </button>
-          ))}
-        </div>
-      </div>
+        {/* Fotografía del punto con datos de cámara, pendiente y galería multi-cámara */}
+        <div className="mt-3 flex flex-col gap-1.5">
+          <div className="relative h-44 w-full shrink-0 overflow-hidden rounded-xl border border-[#6c3d27] bg-[#1a110e]">
+            {/* Fallback visual marciano de alta fidelidad si la imagen local aún no está en /public/imagenes */}
+            {!imagenRealDisponible && (
+              <svg
+                viewBox="0 0 400 180"
+                preserveAspectRatio="none"
+                className="absolute inset-0 h-full w-full"
+              >
+                <defs>
+                  <linearGradient id="martianSky" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stopColor="#2c1d19" />
+                    <stop offset="50%" stopColor="#6b3e26" />
+                    <stop offset="100%" stopColor="#3c2218" />
+                  </linearGradient>
+                </defs>
+                <rect width="400" height="180" fill="url(#martianSky)" />
+                {/* Horizonte y afloramientos de Mount Sharp */}
+                <polygon
+                  points="0,115 65,82 145,98 235,68 325,88 400,72 400,180 0,180"
+                  fill="#4a2819"
+                />
+                {/* Nervaduras poligonales Boxwork o bloques angulares según el nodo */}
+                <path
+                  d="M 20 165 L 110 122 L 210 148 L 310 118 L 385 152"
+                  fill="none"
+                  stroke="#d97706"
+                  strokeWidth="2.5"
+                  strokeOpacity="0.65"
+                />
+                <path
+                  d="M 75 175 L 155 130 L 265 162 L 350 125"
+                  fill="none"
+                  stroke="#f59e0b"
+                  strokeWidth="1.8"
+                  strokeOpacity="0.5"
+                />
+              </svg>
+            )}
 
-      {/* VISOR POV EN PRIMERA PERSONA DE CURIOSITY CON GALERÍA DE IMÁGENES REALES */}
-      <div className="flex flex-col gap-1.5">
-        <div className="relative h-52 w-full shrink-0 overflow-hidden rounded-xl border-2 border-cyan-500/50 bg-black shadow-lg">
-          {/* Fallback SVG solo si la imagen aún no cargó */}
-          {!imagenRealDisponible && (
-            <svg
-              viewBox="0 0 400 180"
-              preserveAspectRatio="none"
-              className="absolute inset-0 h-full w-full"
-            >
-              <rect width="400" height="180" fill="#2c1d19" />
-              <polygon
-                points="0,115 65,82 145,98 235,68 325,88 400,72 400,180 0,180"
-                fill="#4a2819"
+            {imagenRealDisponible && (
+              <img
+                key={fotoActiva.src}
+                src={fotoActiva.src}
+                alt={fotoActiva.etiqueta}
+                onError={() => setImagenRealDisponible(false)}
+                onClick={() => setLightboxAbierto(true)}
+                className="absolute inset-0 h-full w-full cursor-zoom-in object-cover transition-transform duration-300 hover:scale-105"
               />
-            </svg>
-          )}
+            )}
 
-          {imagenRealDisponible && (
-            <img
-              key={fotoActiva.src}
-              src={fotoActiva.src}
-              alt={fotoActiva.etiqueta}
-              onError={() => setImagenRealDisponible(false)}
-              onClick={() => setLightboxAbierto(true)}
-              className="absolute inset-0 h-full w-full cursor-zoom-in object-cover transition-transform duration-300 hover:scale-105"
-            />
-          )}
+            {/* Superposición opcional tipo "Visor de Casco (HUD)" ligera para no tapar la foto */}
+            {visorCascoHudActivo && (
+              <div className="pointer-events-none absolute inset-0 flex flex-col justify-between p-2 font-mono">
+                <div className="flex items-center justify-between text-[10px]">
+                  <span className="rounded border border-cyan-400/70 bg-slate-950/80 px-2 py-0.5 font-bold text-cyan-300 backdrop-blur-sm">
+                    {fotoActiva.camaraSol}
+                  </span>
+                  <span
+                    className={`rounded border px-2 py-0.5 font-black backdrop-blur-sm ${
+                      esPeligroAlto
+                        ? "border-rose-400 bg-rose-950/85 text-rose-200"
+                        : "border-emerald-400/70 bg-emerald-950/80 text-emerald-300"
+                    }`}
+                  >
+                    PENDIENTE: {nodo.riesgoTramo.pendienteGrados}° (
+                    {nodo.riesgoTramo.nivel.toUpperCase()})
+                  </span>
+                </div>
 
-          {/* Superposición opcional tipo "Visor de Casco (HUD)" ligera para no tapar la foto */}
-          {visorCascoHudActivo && (
-            <div className="pointer-events-none absolute inset-0 flex flex-col justify-between p-2 font-mono">
-              <div className="flex items-center justify-between text-[10px]">
-                <span className="rounded border border-cyan-400/70 bg-slate-950/80 px-2 py-0.5 font-bold text-cyan-300 backdrop-blur-sm">
-                  {fotoActiva.camaraSol}
-                </span>
-                <span
-                  className={`rounded border px-2 py-0.5 font-black backdrop-blur-sm ${
-                    esPeligroAlto
-                      ? "border-rose-400 bg-rose-950/85 text-rose-200"
-                      : "border-emerald-400/70 bg-emerald-950/80 text-emerald-300"
-                  }`}
-                >
-                  PENDIENTE: {nodo.riesgoTramo.pendienteGrados}° (
-                  {nodo.riesgoTramo.nivel.toUpperCase()})
-                </span>
+                <div className="rounded-lg border border-slate-700/80 bg-slate-950/80 px-2.5 py-1 text-[10px] text-slate-200 backdrop-blur-sm">
+                  <p className="font-bold text-cyan-200">{fotoActiva.etiqueta}</p>
+                  <p className="line-clamp-1 text-slate-300">
+                    {nodo.imagenPov.descripcionHud}
+                  </p>
+                </div>
               </div>
+            )}
 
-              <div className="rounded-lg border border-slate-700/80 bg-slate-950/80 px-2.5 py-1 text-[10px] text-slate-200 backdrop-blur-sm">
-                <p className="font-bold text-cyan-200">{fotoActiva.etiqueta}</p>
-                <p className="line-clamp-1 text-slate-300">
-                  {nodo.imagenPov.descripcionHud}
-                </p>
-              </div>
+            {/* Botones de control sobre la imagen: Ampliar y HUD ON/OFF */}
+            <div className="absolute right-2 top-8 z-10 flex items-center gap-1.5 font-mono">
+              <button
+                type="button"
+                onClick={() => setLightboxAbierto(true)}
+                className="rounded-lg border border-amber-400/80 bg-slate-950/90 px-2 py-1 text-[10px] font-black text-amber-300 hover:bg-slate-800"
+              >
+                [🔍 Ampliar Foto]
+              </button>
+              <button
+                type="button"
+                onClick={() => setVisorCascoHudActivo(!visorCascoHudActivo)}
+                className="rounded-lg border border-cyan-400/60 bg-slate-950/90 px-2 py-1 text-[10px] font-bold text-cyan-200 hover:bg-slate-800"
+              >
+                {visorCascoHudActivo ? "HUD: ON" : "HUD: OFF"}
+              </button>
             </div>
-          )}
+          </div>
 
-          {/* Botones de control sobre la imagen: Ampliar y HUD ON/OFF */}
-          <div className="absolute right-2 top-8 z-10 flex items-center gap-1.5 font-mono">
-            <button
-              type="button"
-              onClick={() => setLightboxAbierto(true)}
-              className="rounded-lg border border-amber-400/80 bg-slate-950/90 px-2 py-1 text-[10px] font-black text-amber-300 hover:bg-slate-800"
-            >
-              [🔍 Ampliar Foto]
-            </button>
-            <button
-              type="button"
-              onClick={() => setVisorCascoHudActivo(!visorCascoHudActivo)}
-              className="rounded-lg border border-cyan-400/60 bg-slate-950/90 px-2 py-1 text-[10px] font-bold text-cyan-200 hover:bg-slate-800"
-            >
-              {visorCascoHudActivo ? "HUD: ON" : "HUD: OFF"}
-            </button>
+          {/* Tira de miniaturas para cambiar entre las fotos reales de Curiosity de este nodo */}
+          <div className="grid grid-cols-3 gap-1.5 font-mono sm:grid-cols-4">
+            {galeriaNodo.map((item, idx) => (
+              <button
+                key={item.src}
+                type="button"
+                onClick={() => {
+                  setIndiceFotoGaleria(idx);
+                  setImagenRealDisponible(true);
+                }}
+                className={`group relative h-11 overflow-hidden rounded-lg border-2 transition-all ${
+                  indiceFotoGaleria === idx
+                    ? "border-cyan-400 ring-2 ring-cyan-400/40"
+                    : "border-[#6c3d27] opacity-75 hover:opacity-100"
+                }`}
+              >
+                <img
+                  src={item.src}
+                  alt={item.etiqueta}
+                  className="h-full w-full object-cover"
+                />
+                <span className="absolute inset-x-0 bottom-0 truncate bg-slate-950/85 px-1 py-0.5 text-[8px] font-bold text-slate-200">
+                  Foto {idx + 1}: {item.camaraSol}
+                </span>
+              </button>
+            ))}
           </div>
         </div>
-
-        {/* Tira de miniaturas para cambiar entre las fotos reales de Curiosity de este nodo */}
-        <div className="grid grid-cols-3 sm:grid-cols-4 gap-1.5 font-mono">
-          {galeriaNodo.map((item, idx) => (
-            <button
-              key={item.src}
-              type="button"
-              onClick={() => {
-                setIndiceFotoGaleria(idx);
-                setImagenRealDisponible(true);
-              }}
-              className={`group relative h-11 overflow-hidden rounded-lg border-2 transition-all ${
-                indiceFotoGaleria === idx
-                  ? "border-cyan-400 ring-2 ring-cyan-400/40"
-                  : "border-slate-700 opacity-70 hover:opacity-100"
-              }`}
-            >
-              <img
-                src={item.src}
-                alt={item.etiqueta}
-                className="h-full w-full object-cover"
-              />
-              <span className="absolute bottom-0 inset-x-0 bg-slate-950/85 px-1 py-0.2 text-[8px] font-bold text-slate-200 truncate">
-                Foto {idx + 1}: {item.camaraSol}
-              </span>
-            </button>
-          ))}
-        </div>
       </div>
 
-      {/* FILTRO DE REGISTROS POR CAPA Y LISTA DE AUDITORÍA CIENTÍFICA */}
-      <div className="grid grid-cols-4 gap-1 font-mono text-[10px]">
+      <div className="grid grid-cols-4 gap-2 font-mono">
+        {nodos.map((n) => (
+          <button
+            key={n.id}
+            type="button"
+            onClick={() => onSelectNodo(n.id)}
+            aria-pressed={n.id === nodo.id}
+            className={`min-h-10 rounded-xl border px-2 py-2 text-xs transition-colors ${
+              n.id === nodo.id
+                ? "border-cyan-400 bg-cyan-400 text-slate-950"
+                : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-600"
+            }`}
+          >
+            N{n.orden}
+          </button>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-2 gap-2">
+        {indicadores.map(({ titulo, registro }) => (
+          <section
+            key={titulo}
+            className="min-h-[105px] rounded-2xl border border-slate-800 bg-slate-900 p-3 font-mono"
+          >
+            <p className="text-[10px] uppercase tracking-wider text-slate-400">
+              {titulo}
+            </p>
+            <p className="mt-2 text-lg font-bold text-slate-100">
+              {!registro || registro.valor === null
+                ? "Sin cobertura"
+                : `${registro.valor}${registro.unidad ? ` ${registro.unidad}` : ""}`}
+            </p>
+            <p className="mt-1 truncate text-[10px] text-slate-500">
+              {registro
+                ? `${registro.clasificacion} · ${registro.instrumento}`
+                : "Sin medición para este nodo"}
+            </p>
+          </section>
+        ))}
+      </div>
+
+      <details className="rounded-2xl border border-slate-800 bg-slate-900 p-3 font-mono">
+        <summary className="cursor-pointer list-none text-sm font-medium text-cyan-300">
+          Ver telemetría y trazabilidad del nodo ({todosLosRegistros.length})
+        </summary>
+        <div className="mt-3 grid grid-cols-2 gap-1 font-mono text-[10px] xl:grid-cols-4">
         {(
           [
             { id: "TODAS", label: "TODAS (3 CAPAS)" },
@@ -300,25 +362,25 @@ export function NodeAuditDrawer({
             {tab.label}
           </button>
         ))}
-      </div>
+        </div>
 
-      {/* LISTA SCROLLABLE DE REGISTROS DE TELEMETRÍA */}
-      <div className="flex-1 space-y-2 overflow-y-auto pr-1">
-        {(filtroCapa === "TODAS" || filtroCapa === "movilidadTerreno") &&
-          nodo.capas.movilidadTerreno.map((reg) => (
-            <TarjetaDatoTrazable key={reg.id} registro={reg} />
-          ))}
+        <div className="mt-3 max-h-72 space-y-2 overflow-y-auto pr-1">
+          {(filtroCapa === "TODAS" || filtroCapa === "movilidadTerreno") &&
+            nodo.capas.movilidadTerreno.map((reg) => (
+              <TarjetaDatoTrazable key={reg.id} registro={reg} />
+            ))}
 
-        {(filtroCapa === "TODAS" || filtroCapa === "seguridadSupervivencia") &&
-          nodo.capas.seguridadSupervivencia.map((reg) => (
-            <TarjetaDatoTrazable key={reg.id} registro={reg} />
-          ))}
+          {(filtroCapa === "TODAS" || filtroCapa === "seguridadSupervivencia") &&
+            nodo.capas.seguridadSupervivencia.map((reg) => (
+              <TarjetaDatoTrazable key={reg.id} registro={reg} />
+            ))}
 
-        {(filtroCapa === "TODAS" || filtroCapa === "interesCientifico") &&
-          nodo.capas.interesCientifico.map((reg) => (
-            <TarjetaDatoTrazable key={reg.id} registro={reg} />
-          ))}
-      </div>
+          {(filtroCapa === "TODAS" || filtroCapa === "interesCientifico") &&
+            nodo.capas.interesCientifico.map((reg) => (
+              <TarjetaDatoTrazable key={reg.id} registro={reg} />
+            ))}
+        </div>
+      </details>
 
       {/* MODAL LIGHTBOX DE PANTALLA COMPLETA PARA INSPECCIONAR LAS FOTOGRAFÍAS DE CURIOSITY */}
       {lightboxAbierto && (
@@ -356,7 +418,7 @@ export function NodeAuditDrawer({
               />
             </div>
 
-            <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+            <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
               {galeriaNodo.map((item, idx) => (
                 <button
                   key={item.src}

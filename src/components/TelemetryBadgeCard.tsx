@@ -13,12 +13,12 @@ const ESTILOS_CLASIFICACION: Record<
     border: "border-emerald-800/60",
   },
   derivado: {
-    badge: "bg-sky-950/90 text-sky-300 border-sky-500/70",
+    badge: "bg-transparent text-cyan-300 border-cyan-400",
     label: "[DERIVADO]",
     border: "border-sky-800/60",
   },
   simulado: {
-    badge: "bg-amber-950/90 text-amber-300 border-amber-500/70",
+    badge: "bg-transparent text-violet-300 border-violet-400",
     label: "[SIMULADO]",
     border: "border-amber-800/60",
   },
