@@ -33,7 +33,7 @@
 
 **Team Members (*Integrantes del Equipo*):**
 - **Jorge Geronimo Agüero López**
-- **Marcos Gabriel Coloma Muños**
+- **Marcos Gabriel Coloma Muñoz**
 - **Fabian Barzola**
 
 ---
