@@ -30,8 +30,8 @@ export const BOXWORK_MISSION_PARAMETERS: MissionSimulationParameters = {
   energiaInicialRoverPorcentaje: 100,
   reservaMinimaRoverPorcentaje: 20,
   velocidadCaminataKmHora: 0.45,
-  tiempoTramoIdaBaseMin: 95, // Caminata de ida por el corredor seguro hasta Nodo 3 (igual en Solo y conRover)
-  tiempoTramoRegresoBaseMin: 95, // Caminata de regreso al punto seguro Nodo 1 (igual en Solo y conRover)
+  tiempoTramoIdaBaseMin: 80, // Caminata de ida por el corredor seguro hasta Nodo 3 (igual en Solo y conRover)
+  tiempoTramoRegresoBaseMin: 80, // Caminata de regreso al punto seguro Nodo 1 (igual en Solo y conRover)
   tiempoAdicionalDesvioIdaRegresoMin: 25, // Tiempo de caminata adicional (ida+vuelta) hacia el Nodo 4
   consumoRoverRutaBasePorcentaje: 28,
   consumoRoverParadaCientifica1Porcentaje: 16,
@@ -206,8 +206,8 @@ export const BOXWORK_WAYPOINT_NODES: WaypointNode[] = [
     coordenadasMapa: {
       xPercent: 42,
       yPercent: 34,
-      lat: -4.6821,
-      lon: 137.3629,
+      lat: -4.6806,
+      lon: 137.3636,
       elevacionM: -3898,
     },
     esRutaHistoricaCuriosity: true,
