@@ -2,6 +2,10 @@
 
 import React, { useState } from "react";
 import { DecisionEnginePanel } from "~/components/DecisionEnginePanel";
+import {
+  calcularEstadoEtapaEva,
+  EvaSequencePlayer,
+} from "~/components/EvaSequencePlayer";
 import { NodeAuditDrawer } from "~/components/NodeAuditDrawer";
 import { TacticalMapCanvas } from "~/components/TacticalMapCanvas";
 import { TopTelemetryBar } from "~/components/TopTelemetryBar";
@@ -12,8 +16,9 @@ export function WristTabletHUD() {
   const [mode, setMode] = useState<MissionMode>("conRover");
   const [includeDetour, setIncludeDetour] = useState<boolean>(false);
   const [simulateSolarAlert, setSimulateSolarAlert] = useState<boolean>(false);
+  const [etapaActual, setEtapaActual] = useState<number>(1);
   const [nodoSeleccionadoId, setNodoSeleccionadoId] = useState<string>(
-    "nodo-3-ciencia-boxwork"
+    "nodo-1-inicio-seguro"
   );
 
   const missionDataQuery = api.mission.getMissionData.useQuery();
@@ -50,8 +55,30 @@ export function WristTabletHUD() {
     );
   }
 
+  const estadoEtapa = calcularEstadoEtapaEva({
+    etapa: etapaActual,
+    mode,
+    includeDetour,
+    simulateSolarAlert,
+    parametros: data.parametros,
+    simulation: sim,
+  });
+
   const nodoActual =
     data.nodos.find((n) => n.id === nodoSeleccionadoId) ?? data.nodos[0]!;
+
+  const handleChangeEtapa = (nuevaEtapa: number) => {
+    setEtapaActual(nuevaEtapa);
+    const infoEtapa = calcularEstadoEtapaEva({
+      etapa: nuevaEtapa,
+      mode,
+      includeDetour,
+      simulateSolarAlert,
+      parametros: data.parametros,
+      simulation: sim,
+    });
+    setNodoSeleccionadoId(infoEtapa.nodoFocoId);
+  };
 
   const handleToggleDetour = () => {
     const next = !includeDetour;
@@ -63,8 +90,8 @@ export function WristTabletHUD() {
 
   return (
     <div className="flex min-h-screen w-full flex-col items-center justify-center bg-[#05080f] p-2 sm:p-3 text-slate-100 select-none">
-      {/* CHASIS DE TABLET DE MUÑECA 16:9 CON BISEL TÁCTICO Y BOTONES LATERALES PARA GUANTES */}
-      <div className="relative flex w-full max-w-[1640px] lg:aspect-video flex-col justify-between overflow-hidden rounded-[28px] border-4 border-slate-700/90 bg-gradient-to-br from-slate-950 via-[#0a111e] to-slate-950 p-3 sm:p-4 shadow-[0_0_70px_rgba(6,182,212,0.18)]">
+      {/* CHASIS DE TABLET DE MUÑECA 16:9 CON BISEL TÁCTICO Y BOTONES GRANDES PARA GUANTES */}
+      <div className="relative flex w-full max-w-[1640px] flex-col justify-between gap-2 overflow-hidden rounded-[28px] border-4 border-slate-700/90 bg-gradient-to-br from-slate-950 via-[#0a111e] to-slate-950 p-3 sm:p-4 shadow-[0_0_70px_rgba(6,182,212,0.18)]">
         {/* 1. BARRA SUPERIOR DE TELEMETRÍA Y ESCENARIO (CAPA 4.2 - SEGURIDAD Y SUPERVIVENCIA) */}
         <TopTelemetryBar
           mode={mode}
@@ -77,9 +104,21 @@ export function WristTabletHUD() {
           parametros={data.parametros}
         />
 
-        {/* 2. CUERPO CENTRAL: LIENZO DEL MAPA (IZQUIERDA) + AUDITORÍA CIENTÍFICA Y VISOR POV HUD (DERECHA) */}
-        <div className="my-2 grid flex-1 grid-cols-1 gap-3 overflow-hidden lg:grid-cols-12">
-          {/* Columna Izquierda (7 cols): Lienzo Central del Mapa y Trazado de Ruta (Capas 4.1, 4.2 y 4.3) */}
+        {/* 2. REPRODUCTOR SECUENCIAL DE MISIÓN EVA PASO A PASO (FASE 3) */}
+        <EvaSequencePlayer
+          etapaActual={etapaActual}
+          onChangeEtapa={handleChangeEtapa}
+          estadoEtapa={estadoEtapa}
+          mode={mode}
+          onChangeMode={setMode}
+          includeDetour={includeDetour}
+          onToggleDetour={handleToggleDetour}
+          simulation={sim}
+        />
+
+        {/* 3. CUERPO CENTRAL: LIENZO DEL MAPA + PERFIL TOPOGRÁFICO (IZQUIERDA) Y AUDITORÍA + VISOR POV HUD (DERECHA) */}
+        <div className="grid flex-1 grid-cols-1 gap-3 overflow-hidden lg:grid-cols-12">
+          {/* Columna Izquierda (7 cols): Mapa Multicapa + Marcador Animado EVA/Rover + Perfil de Elevación MOLA */}
           <div className="flex flex-col overflow-hidden lg:col-span-7">
             <TacticalMapCanvas
               nodos={data.nodos}
@@ -87,6 +126,8 @@ export function WristTabletHUD() {
               onSelectNodo={setNodoSeleccionadoId}
               includeDetour={includeDetour}
               simulation={sim}
+              mode={mode}
+              estadoEtapa={estadoEtapa}
             />
           </div>
 
@@ -100,7 +141,7 @@ export function WristTabletHUD() {
           </aside>
         </div>
 
-        {/* 3. PANEL INFERIOR: DICTAMEN DEL MOTOR DE DECISIONES (REGLA DE 4 PASOS) */}
+        {/* 4. PANEL INFERIOR: DICTAMEN DEL MOTOR DE DECISIONES (REGLA DE 4 PASOS) */}
         <DecisionEnginePanel
           mode={mode}
           evaluacionDesvio={sim.evaluacionDesvio}

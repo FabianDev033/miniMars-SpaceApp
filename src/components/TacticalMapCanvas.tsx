@@ -1,7 +1,13 @@
 "use client";
 
 import React, { useState } from "react";
-import type { MissionSimulationResult, WaypointNode } from "~/types/mission";
+import { ElevationProfile } from "~/components/ElevationProfile";
+import type { EstadoEtapaEva } from "~/components/EvaSequencePlayer";
+import type {
+  MissionMode,
+  MissionSimulationResult,
+  WaypointNode,
+} from "~/types/mission";
 
 interface TacticalMapCanvasProps {
   nodos: WaypointNode[];
@@ -9,6 +15,8 @@ interface TacticalMapCanvasProps {
   onSelectNodo: (id: string) => void;
   includeDetour: boolean;
   simulation: MissionSimulationResult;
+  mode: MissionMode;
+  estadoEtapa: EstadoEtapaEva;
 }
 
 export function TacticalMapCanvas({
@@ -17,8 +25,9 @@ export function TacticalMapCanvas({
   onSelectNodo,
   includeDetour,
   simulation,
+  mode,
+  estadoEtapa,
 }: TacticalMapCanvasProps) {
-  // Controles de encendido y opacidad de las 3 capas cartográficas (4.1, 4.2, 4.3)
   const [capa41Activa, setCapa41Activa] = useState(true);
   const [opacidad41, setOpacidad41] = useState(90);
 
@@ -28,7 +37,6 @@ export function TacticalMapCanvas({
   const [capa43Activa, setCapa43Activa] = useState(true);
   const [opacidad43, setOpacidad43] = useState(70);
 
-  // Detección de imágenes PNG opcionales en /public/imagenes con fallback SVG/CSS inmediato
   const [opticoCargado, setOpticoCargado] = useState(true);
   const [molaCargado, setMolaCargado] = useState(true);
   const [termicaCargado, setTermicaCargado] = useState(true);
@@ -38,7 +46,6 @@ export function TacticalMapCanvas({
   const nodo3 = nodos.find((n) => n.orden === 3);
   const nodo4 = nodos.find((n) => n.orden === 4);
 
-  // Radio del anillo de Límite de Regreso Seguro (Walk-Back Limit) según si perfora reserva
   const walkBackRadius = simulation.oxigeno.perforaReserva25 ? 52 : 76;
 
   return (
@@ -47,7 +54,7 @@ export function TacticalMapCanvas({
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
         {/* Control Capa 4.1: Movilidad y Terreno */}
         <div
-          className={`flex flex-col justify-between rounded-xl border-2 px-3 py-2 font-mono transition-all ${
+          className={`flex flex-col justify-between rounded-xl border-2 px-3 py-1.5 font-mono transition-all ${
             capa41Activa
               ? "border-cyan-500/80 bg-slate-900/90"
               : "border-slate-800 bg-slate-950/70 opacity-60"
@@ -72,7 +79,7 @@ export function TacticalMapCanvas({
               {capa41Activa ? `${opacidad41}%` : "OFF"}
             </span>
           </div>
-          <div className="mt-1.5 flex items-center gap-2">
+          <div className="mt-1 flex items-center gap-2">
             <span className="text-[10px] text-slate-400">Opacidad</span>
             <input
               type="range"
@@ -81,14 +88,14 @@ export function TacticalMapCanvas({
               value={opacidad41}
               disabled={!capa41Activa}
               onChange={(e) => setOpacidad41(Number(e.target.value))}
-              className="h-2 w-full cursor-pointer accent-cyan-400"
+              className="h-1.5 w-full cursor-pointer accent-cyan-400"
             />
           </div>
         </div>
 
         {/* Control Capa 4.2: Seguridad (RAD / REMS Puntual) */}
         <div
-          className={`flex flex-col justify-between rounded-xl border-2 px-3 py-2 font-mono transition-all ${
+          className={`flex flex-col justify-between rounded-xl border-2 px-3 py-1.5 font-mono transition-all ${
             capa42Activa
               ? "border-emerald-500/80 bg-slate-900/90"
               : "border-slate-800 bg-slate-950/70 opacity-60"
@@ -113,7 +120,7 @@ export function TacticalMapCanvas({
               {capa42Activa ? `${opacidad42}%` : "OFF"}
             </span>
           </div>
-          <div className="mt-1.5 flex items-center gap-2">
+          <div className="mt-1 flex items-center gap-2">
             <span className="text-[10px] text-slate-400">Opacidad</span>
             <input
               type="range"
@@ -122,14 +129,14 @@ export function TacticalMapCanvas({
               value={opacidad42}
               disabled={!capa42Activa}
               onChange={(e) => setOpacidad42(Number(e.target.value))}
-              className="h-2 w-full cursor-pointer accent-emerald-400"
+              className="h-1.5 w-full cursor-pointer accent-emerald-400"
             />
           </div>
         </div>
 
         {/* Control Capa 4.3: Interés Científico (Geológica / Térmica) */}
         <div
-          className={`flex flex-col justify-between rounded-xl border-2 px-3 py-2 font-mono transition-all ${
+          className={`flex flex-col justify-between rounded-xl border-2 px-3 py-1.5 font-mono transition-all ${
             capa43Activa
               ? "border-amber-500/80 bg-slate-900/90"
               : "border-slate-800 bg-slate-950/70 opacity-60"
@@ -154,7 +161,7 @@ export function TacticalMapCanvas({
               {capa43Activa ? `${opacidad43}%` : "OFF"}
             </span>
           </div>
-          <div className="mt-1.5 flex items-center gap-2">
+          <div className="mt-1 flex items-center gap-2">
             <span className="text-[10px] text-slate-400">Opacidad</span>
             <input
               type="range"
@@ -163,21 +170,20 @@ export function TacticalMapCanvas({
               value={opacidad43}
               disabled={!capa43Activa}
               onChange={(e) => setOpacidad43(Number(e.target.value))}
-              className="h-2 w-full cursor-pointer accent-amber-400"
+              className="h-1.5 w-full cursor-pointer accent-amber-400"
             />
           </div>
         </div>
       </div>
 
       {/* LIENZO CENTRAL DEL MAPA SUPERPUESTO */}
-      <div className="relative min-h-[300px] flex-1 overflow-hidden rounded-2xl border-2 border-slate-700/90 bg-[#120d10] shadow-inner">
+      <div className="relative min-h-[245px] flex-1 overflow-hidden rounded-2xl border-2 border-slate-700/90 bg-[#120d10] shadow-inner">
         {/* 1. CAPA 4.1: IMAGEN BASE ÓPTICA + SUPERPOSICIÓN MOLA (CON FALLBACK SVG/CSS AUTOMÁTICO) */}
         {capa41Activa && (
           <div
             className="absolute inset-0 transition-opacity duration-200"
             style={{ opacity: opacidad41 / 100 }}
           >
-            {/* Fallback estilizado de superficie marciana e hipsometría MOLA siempre presente debajo */}
             <svg
               viewBox="0 0 100 100"
               preserveAspectRatio="none"
@@ -208,7 +214,6 @@ export function TacticalMapCanvas({
               <rect width="100" height="100" fill="url(#molaBase)" />
               <rect width="100" height="100" fill="url(#coordGrid)" />
 
-              {/* Curvas de nivel topográficas MOLA / HiRISE */}
               <path
                 d="M 0 90 Q 30 78 100 70"
                 fill="none"
@@ -243,7 +248,6 @@ export function TacticalMapCanvas({
               />
             </svg>
 
-            {/* Intentar cargar /imagenes/mapa_base_optico.png y /imagenes/capa_topografia_mola.png si existen */}
             {opticoCargado && (
               <img
                 src="/imagenes/mapa_base_optico.png"
@@ -266,7 +270,7 @@ export function TacticalMapCanvas({
         {/* 2. CAPA 4.3: SUPERPOSICIÓN GEOLÓGICA / TÉRMICA DE RETÍCULA BOXWORK */}
         {capa43Activa && (
           <div
-            className="absolute inset-0 pointer-events-none transition-opacity duration-200"
+            className="pointer-events-none absolute inset-0 transition-opacity duration-200"
             style={{ opacity: opacidad43 / 100 }}
           >
             <svg
@@ -316,7 +320,6 @@ export function TacticalMapCanvas({
           preserveAspectRatio="none"
           className="pointer-events-none absolute inset-0 h-full w-full"
         >
-          {/* Anillo visual del Límite de Regreso Seguro (Walk-Back Limit) centrado en Nodo 1 */}
           {nodo1 && (
             <g>
               <circle
@@ -346,7 +349,6 @@ export function TacticalMapCanvas({
             </g>
           )}
 
-          {/* Zona de Exclusión en Rojo sobre el Nodo 2 (Pendiente >22°) */}
           {nodo2 && (
             <g>
               <circle
@@ -382,7 +384,6 @@ export function TacticalMapCanvas({
             </g>
           )}
 
-          {/* Trayecto Histórico Real de Curiosity en Línea Sólida (Verde/Cian) Nodo 1 -> Nodo 3 */}
           {nodo1 && nodo3 && (
             <g>
               <path
@@ -405,7 +406,6 @@ export function TacticalMapCanvas({
             </g>
           )}
 
-          {/* Desvío Simulado hacia Parada Científica 2 (Nodo 4) en Línea Punteada */}
           {nodo3 && nodo4 && (
             <g>
               <line
@@ -431,8 +431,8 @@ export function TacticalMapCanvas({
           )}
         </svg>
 
-        {/* HUD Superior del Mapa: Coordenadas y Leyenda de Trazado */}
-        <div className="pointer-events-none absolute left-2.5 right-2.5 top-2.5 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-slate-700/80 bg-slate-950/85 px-3 py-1.5 font-mono text-[10px] backdrop-blur-md">
+        {/* HUD Superior del Mapa */}
+        <div className="pointer-events-none absolute left-2.5 right-2.5 top-2.5 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-slate-700/80 bg-slate-950/85 px-3 py-1 font-mono text-[10px] backdrop-blur-md">
           <div className="flex flex-wrap items-center gap-3">
             <span className="flex items-center gap-1.5 font-bold text-cyan-300">
               <span className="inline-block h-1.5 w-5 rounded bg-cyan-400" />
@@ -452,13 +452,12 @@ export function TacticalMapCanvas({
           </span>
         </div>
 
-        {/* 4. BOTONES INTERACTIVOS GRANDES SOBRE CADA UNO DE LOS 4 NODOS + INDICADORES PUNTUALES CAPA 4.2 */}
+        {/* 4. BOTONES INTERACTIVOS GRANDES SOBRE LOS 4 NODOS + INDICADORES CAPA 4.2 */}
         {nodos.map((nodo) => {
           const esSeleccionado = nodo.id === nodoSeleccionadoId;
           const esObstaculo = nodo.tipo === "obstaculo_exclusion";
           const esDesvio = !nodo.esRutaHistoricaCuriosity;
 
-          // Buscar lecturas puntuales de RAD y REMS para la Capa 4.2
           const radRecord = nodo.capas.seguridadSupervivencia.find((r) =>
             r.instrumento.includes("RAD")
           );
@@ -481,7 +480,7 @@ export function TacticalMapCanvas({
                 className="group flex flex-col items-center focus:outline-none"
               >
                 <div
-                  className={`flex h-12 w-12 items-center justify-center rounded-full border-2 font-mono text-xs font-black transition-all active:scale-95 ${
+                  className={`flex h-11 w-11 items-center justify-center rounded-full border-2 font-mono text-xs font-black transition-all active:scale-95 ${
                     esSeleccionado
                       ? "scale-125 border-white bg-cyan-500 text-slate-950 ring-4 ring-cyan-400/60"
                       : esObstaculo
@@ -507,7 +506,6 @@ export function TacticalMapCanvas({
                 </div>
               </button>
 
-              {/* Indicadores puntuales de Capa 4.2 (RAD / REMS) sobre el nodo */}
               {capa42Activa && (
                 <div
                   style={{ opacity: opacidad42 / 100 }}
@@ -544,63 +542,37 @@ export function TacticalMapCanvas({
             </div>
           );
         })}
-      </div>
 
-      {/* PERFIL VISUAL DE PENDIENTE Y ELEVACIÓN DEL RECORRIDO (CAPA 4.1) */}
-      <div className="rounded-xl border border-slate-800 bg-slate-900/90 px-3 py-2 font-mono">
-        <div className="flex flex-wrap items-center justify-between gap-2 text-[11px]">
-          <span className="font-extrabold uppercase tracking-wider text-cyan-300">
-            PERFIL TOPOGRÁFICO Y DE PENDIENTE DEL RECORRIDO (MOLA / HiRISE DEM):
-          </span>
-          <span className="text-slate-400">
-            Límite operativo de pendiente EVA: ≤ 22.0°
-          </span>
-        </div>
-
-        <div className="mt-1.5 grid grid-cols-4 gap-2">
-          {nodos.map((n) => {
-            const activo = n.id === nodoSeleccionadoId;
-            const peligro = n.riesgoTramo.pendienteGrados > 22;
-            return (
-              <button
-                key={n.id}
-                type="button"
-                onClick={() => onSelectNodo(n.id)}
-                className={`flex flex-col justify-between rounded-lg border px-2.5 py-1.5 text-left transition-all ${
-                  activo
-                    ? "border-cyan-400 bg-cyan-950/50"
-                    : peligro
-                    ? "border-rose-500/60 bg-rose-950/25"
-                    : "border-slate-800 bg-slate-950/70 hover:border-slate-600"
-                }`}
-              >
-                <div className="flex items-center justify-between text-[10px]">
-                  <span className="font-bold text-white">
-                    N{n.orden} ({n.imagenPov.codigoPia})
-                  </span>
-                  <span
-                    className={`rounded px-1 font-black ${
-                      peligro
-                        ? "bg-rose-500 text-white"
-                        : n.riesgoTramo.nivel === "medio"
-                        ? "bg-amber-500/30 text-amber-300"
-                        : "bg-emerald-500/20 text-emerald-300"
-                    }`}
-                  >
-                    {n.riesgoTramo.pendienteGrados}°
-                  </span>
-                </div>
-                <div className="mt-1 flex items-center justify-between text-[10px] text-slate-400">
-                  <span>Elev: {n.coordenadasMapa.elevacionM}m</span>
-                  <span>
-                    {n.esRutaHistoricaCuriosity ? "[Histórico]" : "[Simulado]"}
-                  </span>
-                </div>
-              </button>
-            );
-          })}
+        {/* 5. MARCADOR ANIMADO DEL ASTRONAUTA (Y DEL ROVER SI ESTÁ EN MODO CON ROVER) */}
+        <div
+          style={{
+            left: `${estadoEtapa.posicionMapa.xPercent}%`,
+            top: `${estadoEtapa.posicionMapa.yPercent}%`,
+          }}
+          className="pointer-events-none absolute z-20 -translate-x-1/2 -translate-y-1/2 transition-all duration-700 ease-in-out"
+        >
+          <div className="flex flex-col items-center">
+            <div className="flex items-center gap-1 rounded-full border-2 border-yellow-300 bg-slate-950/95 px-2.5 py-1 font-mono text-[10px] font-black text-yellow-300 shadow-[0_0_20px_rgba(253,224,71,0.75)]">
+              <span>🧑‍🚀 EVA</span>
+              {mode === "conRover" && (
+                <span className="text-amber-300">+ 🛞 ROVER</span>
+              )}
+            </div>
+            <span className="mt-0.5 rounded bg-yellow-400 px-1.5 py-0.2 font-mono text-[9px] font-black text-slate-950 shadow">
+              {estadoEtapa.posicionMapa.etiqueta}
+            </span>
+          </div>
         </div>
       </div>
+
+      {/* 6. PERFIL DE ELEVACIÓN Y PENDIENTE DEL RECORRIDO (SINCRONIZADO CON REPRODUCTOR SECUENCIAL) */}
+      <ElevationProfile
+        nodos={nodos}
+        nodoSeleccionadoId={nodoSeleccionadoId}
+        onSelectNodo={onSelectNodo}
+        etapaActual={estadoEtapa.etapa}
+        includeDetour={includeDetour}
+      />
     </div>
   );
 }
