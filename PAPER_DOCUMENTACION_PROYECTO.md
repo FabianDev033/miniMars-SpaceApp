@@ -14,6 +14,10 @@
 > **MiniMars** *(Mount Sharp Boxwork Sector — Interplanetary Survival & Decision Support System)*  
 *(Repositorio: `miniMars-SpaceApp`)*
 
+**Enlaces Oficiales de Entrega:**
+- **Aplicación Desplegada en Vivo:** [https://minimars-one.vercel.app/](https://minimars-one.vercel.app/)
+- **Presentación Oficial para el Jurado (Canva):** [https://canva.link/l8yflme9lywr6ha](https://canva.link/l8yflme9lywr6ha)
+
 **Integrantes del Equipo:**
 - **Jorge Geronimo Agüero López**
 - **Marcos Gabriel Coloma Muños**

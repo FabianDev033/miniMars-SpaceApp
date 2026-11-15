@@ -4,13 +4,17 @@
   <img src="./public/minimars-icon.png" alt="MiniMars Official Logo" width="160" />
 </p>
 
+[![Live Demo - Vercel](https://img.shields.io/badge/Live_Application-minimars--one.vercel.app-00C7B7?style=for-the-badge&logo=vercel&logoColor=white)](https://minimars-one.vercel.app/)
+[![Jury Presentation - Canva](https://img.shields.io/badge/Jury_Presentation-Canva_Pitch_Deck-00C4CC?style=for-the-badge&logo=canva&logoColor=white)](https://canva.link/l8yflme9lywr6ha)
 [![NASA Space Apps Challenge](https://img.shields.io/badge/NASA_Space_Apps-Interplanetary_Survival_Guide-0B3D91?style=for-the-badge&logo=nasa&logoColor=white)](https://www.spaceappschallenge.org/)
 [![Next.js 15](https://img.shields.io/badge/Next.js_15-App_Router-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
 [![TypeScript 5.7](https://img.shields.io/badge/TypeScript_5.7-Strict_Mode-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![tRPC v11](https://img.shields.io/badge/tRPC_v11-Deterministic_Engine-2596BE?style=for-the-badge&logo=trpc&logoColor=white)](https://trpc.io/)
 [![NASA Mars Trek WMTS](https://img.shields.io/badge/NASA_Mars_Trek-OGC_WMTS_Live-E03C31?style=for-the-badge)](https://trek.nasa.gov/tiles/apidoc/trekAPI.html?body=mars)
 
-> **Full Project Papers:**  
+> **Official Links for Judges & Full Project Papers:**  
+> - 🚀 **[Live Deployed Application (`minimars-one.vercel.app`)](https://minimars-one.vercel.app/)**  
+> - 📊 **[Official Jury Presentation / Pitch Deck (Canva)](https://canva.link/l8yflme9lywr6ha)**  
 > - 📄 **[Academic Paper in English (`PAPER_PROJECT_DOCUMENTATION_EN.pdf`)](./PAPER_PROJECT_DOCUMENTATION_EN.pdf)**  
 > - 📄 **[Documento Técnico en Español (`PAPER_DOCUMENTACION_PROYECTO.pdf`)](./PAPER_DOCUMENTACION_PROYECTO.pdf)**  
 > - 🧭 **[Mission Design & Engineering Guide (`GUIA_PROYECTO_SUPERVIVENCIA_INTERPLANETARIA.pdf`)](./GUIA_PROYECTO_SUPERVIVENCIA_INTERPLANETARIA.pdf)**
@@ -22,6 +26,10 @@
 **Official Project Name:**  
 **MiniMars** *(Mount Sharp Boxwork Sector — Interplanetary Survival & Decision Support System)*  
 *(Repository Identifier: `miniMars-SpaceApp`)*
+
+**Official Resources:**
+- **Live Web Application:** [https://minimars-one.vercel.app/](https://minimars-one.vercel.app/)
+- **Jury Presentation (Canva):** [https://canva.link/l8yflme9lywr6ha](https://canva.link/l8yflme9lywr6ha)
 
 **Team Members (*Integrantes del Equipo*):**
 - **Jorge Geronimo Agüero López**
