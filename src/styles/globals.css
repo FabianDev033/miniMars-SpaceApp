@@ -13,3 +13,27 @@ body {
   padding: 0;
   overflow-x: hidden;
 }
+
+/* Estilos tácticos para el contenedor Leaflet WMTS de NASA Mars Trek */
+.leaflet-container {
+  background-color: #211009 !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace !important;
+}
+
+.mars-tactical-div-icon {
+  background: transparent !important;
+  border: none !important;
+}
+
+.leaflet-control-attribution {
+  background: rgba(2, 6, 23, 0.85) !important;
+  color: #94a3b8 !important;
+  font-size: 9px !important;
+  border-top: 1px solid #1e293b;
+  border-left: 1px solid #1e293b;
+  border-top-left-radius: 6px;
+}
+
+.leaflet-control-attribution a {
+  color: #38bdf8 !important;
+}
