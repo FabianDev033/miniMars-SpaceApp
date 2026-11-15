@@ -35,7 +35,7 @@ export function WristTabletHUD() {
       <div className="flex min-h-screen items-center justify-center bg-[#060911] p-6 font-mono text-cyan-300">
         <div className="rounded-2xl border-2 border-cyan-500/40 bg-slate-900/90 px-8 py-6 text-center shadow-2xl">
           <p className="text-sm font-black uppercase tracking-widest text-cyan-400">
-            INICIALIZANDO TABLET DE MUÑECA EVA // MOUNT SHARP (SECTOR BOXWORK)
+            INICIALIZANDO MINIMARS // TABLET DE MUÑECA EVA — MOUNT SHARP (SECTOR BOXWORK)
           </p>
           <p className="mt-2 text-xs text-slate-400">
             Cargando dataset local tipado (PIA26552, PIA26364, PIA26558,

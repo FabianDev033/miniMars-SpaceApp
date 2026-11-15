@@ -43,13 +43,20 @@ export function TopTelemetryBar({
   return (
     <header className="flex flex-col gap-3 font-mono">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <p className="text-[11px] uppercase tracking-[0.18em] text-slate-400">
-            Curiosity MSL · Cráter Gale, Marte
-          </p>
-          <h1 className="mt-1 text-base font-bold text-slate-100 sm:text-lg">
-            Mount Sharp — sector boxwork
-          </h1>
+        <div className="flex items-center gap-3">
+          <img
+            src="/minimars-icon.png"
+            alt="MiniMars Logo"
+            className="h-11 w-11 shrink-0 rounded-full object-contain"
+          />
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.18em] text-slate-400">
+              MiniMars · Curiosity MSL · Cráter Gale, Marte
+            </p>
+            <h1 className="mt-1 text-base font-bold text-slate-100 sm:text-lg">
+              MiniMars — Mount Sharp (sector boxwork)
+            </h1>
+          </div>
         </div>
 
         <button

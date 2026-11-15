@@ -135,10 +135,10 @@ export function ScientificAuditModal({
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-800 pb-3">
           <div>
             <span className="text-[11px] uppercase tracking-[0.18em] text-slate-400">
-              Auditoría científica · Trazabilidad de datos
+              MiniMars · Auditoría científica · Trazabilidad de datos
             </span>
             <h2 className="mt-1 text-lg font-bold text-slate-100 sm:text-2xl">
-              Mount Sharp — sector boxwork
+              MiniMars — Mount Sharp (sector boxwork)
             </h2>
           </div>
 
@@ -449,8 +449,11 @@ export function ScientificAuditModal({
         {/* PIE DEL MODAL */}
         <div className="mt-3 flex flex-wrap items-center justify-between gap-2 border-t border-slate-800 pt-2.5 text-[11px] text-slate-400">
           <span>
-            NASA Space Apps Challenge — Desafío: Guía de Supervivencia
+            MiniMars · NASA Space Apps Challenge — Desafío: Guía de Supervivencia
             Interplanetaria (Mount Sharp / Sector Boxwork)
+          </span>
+          <span>
+            Equipo: Jorge Geronimo Agüero López · Marcos Gabriel Coloma Muños · Fabian Barzola
           </span>
         </div>
       </div>
